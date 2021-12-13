@@ -45,13 +45,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>C:\Games\Halo Online\Halo Online (11.1.604673 2015-10-15)\bin\</OutDir>
+    <OutDir>bin\$(Configuration)\</OutDir>
     <IntDir>int\$(Configuration)\</IntDir>
     <PublicIncludeDirectories>$(ProjectDir)src\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>C:\Games\Halo Online\Halo Online (11.1.604673 2015-10-15)\bin\</OutDir>
+    <OutDir>bin\$(Configuration)\</OutDir>
     <IntDir>int\$(Configuration)\</IntDir>
     <PublicIncludeDirectories>$(ProjectDir)src\;$(PublicIncludeDirectories)</PublicIncludeDirectories>
   </PropertyGroup>
