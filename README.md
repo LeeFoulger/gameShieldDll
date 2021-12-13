@@ -12,3 +12,7 @@
 - F2: Load Map Dialog (file explorer for map selection)
 
 ## [Download latest binary here!](https://github.com/theTwist84/gameShieldDll/releases/)
+
+
+# fuck you (greyknight/a267/gungnir/faber), stay away from my fucking repos
+## don't modify my code unless you actually know what the fuck you're doing
