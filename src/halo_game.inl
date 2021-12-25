@@ -6,22 +6,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x04D033FCul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x04D03370ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x04E8643Cul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x04E864BCul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x04E919C8ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x04E91A48ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x04E9DA48ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x04EB6DD4ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x04EBE9BCul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x04EBE93Cul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x04EBE9BCul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x04EBE944ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x04EBE944ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x03F3095Cul);
+			//case _product_version_ms26_301003: return 0x04D033FC;
+			//case _product_version_ms26_332089: return 0x04D03370;
+			//case _product_version_ms27_373869: return 0x04E8643C;
+			//case _product_version_ms27_416138: return 0x04E864BC;
+			//case _product_version_ms28_430653: return 0x04E919C8;
+			//case _product_version_ms28_454665: return 0x04E91A48;
+			//case _product_version_ms28_479394: return 0x04E9DA48;
+			case _product_version_ms29_498295: return 0x04EB6DD4;
+			case _product_version_ms29_530945: return 0x04EBE9BC;
+			case _product_version_ms29_533032: return 0x04EBE93C;
+			case _product_version_ms29_554482: return 0x04EBE9BC;
+			case _product_version_ms29_571698: return 0x04EBE944;
+			case _product_version_ms29_604673: return 0x04EBE944;
+			//case _product_version_ms30_700255: return 0x03F3095C;
 		}
 		return 0;
 	}
@@ -32,22 +34,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x00097B80ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x00097B20ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x00097BC0ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x00097EB0ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x00099D90ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x00099D90ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x00099D90ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009AB10ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009AB10ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009A860ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009AD90ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009AB10ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009AC10ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009B630ul);
+			//case _product_version_ms26_301003: return 0x00097B80;
+			//case _product_version_ms26_332089: return 0x00097B20;
+			//case _product_version_ms27_373869: return 0x00097BC0;
+			//case _product_version_ms27_416138: return 0x00097EB0;
+			//case _product_version_ms28_430653: return 0x00099D90;
+			//case _product_version_ms28_454665: return 0x00099D90;
+			//case _product_version_ms28_479394: return 0x00099D90;
+			case _product_version_ms29_498295: return 0x0009AB10;
+			case _product_version_ms29_530945: return 0x0009AB10;
+			case _product_version_ms29_533032: return 0x0009A860;
+			case _product_version_ms29_554482: return 0x0009AD90;
+			case _product_version_ms29_571698: return 0x0009AB10;
+			case _product_version_ms29_604673: return 0x0009AC10;
+			//case _product_version_ms30_700255: return 0x0009B630;
 		}
 		return 0;
 	}
@@ -58,22 +62,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x00097C10ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x00097BB0ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x00097C50ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x00097F40ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x00099E20ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x00099E20ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x00099E20ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009ABA0ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009ABA0ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009A8F0ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009AE20ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009ABA0ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009ACA0ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009B6C0ul);
+			//case _product_version_ms26_301003: return 0x00097C10;
+			//case _product_version_ms26_332089: return 0x00097BB0;
+			//case _product_version_ms27_373869: return 0x00097C50;
+			//case _product_version_ms27_416138: return 0x00097F40;
+			//case _product_version_ms28_430653: return 0x00099E20;
+			//case _product_version_ms28_454665: return 0x00099E20;
+			//case _product_version_ms28_479394: return 0x00099E20;
+			case _product_version_ms29_498295: return 0x0009ABA0;
+			case _product_version_ms29_530945: return 0x0009ABA0;
+			case _product_version_ms29_533032: return 0x0009A8F0;
+			case _product_version_ms29_554482: return 0x0009AE20;
+			case _product_version_ms29_571698: return 0x0009ABA0;
+			case _product_version_ms29_604673: return 0x0009ACA0;
+			//case _product_version_ms30_700255: return 0x0009B6C0;
 		}
 		return 0;
 	}
@@ -84,22 +90,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x00098A60ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x00098A20ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x00098AA0ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x00098D90ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x0009AC70ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x0009AC70ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x0009AC70ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009BA70ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009BA70ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009B7C0ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009BCF0ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009BA70ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009BB70ul);
-			////CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009C580ul);
+			//case _product_version_ms26_301003: return 0x00098A60;
+			//case _product_version_ms26_332089: return 0x00098A20;
+			//case _product_version_ms27_373869: return 0x00098AA0;
+			//case _product_version_ms27_416138: return 0x00098D90;
+			//case _product_version_ms28_430653: return 0x0009AC70;
+			//case _product_version_ms28_454665: return 0x0009AC70;
+			//case _product_version_ms28_479394: return 0x0009AC70;
+			case _product_version_ms29_498295: return 0x0009BA70;
+			case _product_version_ms29_530945: return 0x0009BA70;
+			case _product_version_ms29_533032: return 0x0009B7C0;
+			case _product_version_ms29_554482: return 0x0009BCF0;
+			case _product_version_ms29_571698: return 0x0009BA70;
+			case _product_version_ms29_604673: return 0x0009BB70;
+			//case _product_version_ms30_700255: return 0x0009C580;
 		}
 		return 0;
 	}
@@ -110,22 +118,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x00098AF0ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x00098AB0ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x00098B30ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x00098E20ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x0009AD00ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x0009AD00ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x0009AD00ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009BB00ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009BB00ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009B850ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009BD80ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009BB00ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009BC00ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009C610ul);
+			//case _product_version_ms26_301003: return 0x00098AF0;
+			//case _product_version_ms26_332089: return 0x00098AB0;
+			//case _product_version_ms27_373869: return 0x00098B30;
+			//case _product_version_ms27_416138: return 0x00098E20;
+			//case _product_version_ms28_430653: return 0x0009AD00;
+			//case _product_version_ms28_454665: return 0x0009AD00;
+			//case _product_version_ms28_479394: return 0x0009AD00;
+			case _product_version_ms29_498295: return 0x0009BB00;
+			case _product_version_ms29_530945: return 0x0009BB00;
+			case _product_version_ms29_533032: return 0x0009B850;
+			case _product_version_ms29_554482: return 0x0009BD80;
+			case _product_version_ms29_571698: return 0x0009BB00;
+			case _product_version_ms29_604673: return 0x0009BC00;
+			//case _product_version_ms30_700255: return 0x0009C610;
 		}
 		return 0;
 	}
@@ -136,22 +146,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x00098D80ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x00098D40ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x00098DC0ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x000990B0ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x0009AF90ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x0009AD90ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x0009AF90ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009BE90ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009BE90ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009BBE0ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009C110ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009BE90ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009BF90ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009C9A0ul);
+			//case _product_version_ms26_301003: return 0x00098D80;
+			//case _product_version_ms26_332089: return 0x00098D40;
+			//case _product_version_ms27_373869: return 0x00098DC0;
+			//case _product_version_ms27_416138: return 0x000990B0;
+			//case _product_version_ms28_430653: return 0x0009AF90;
+			//case _product_version_ms28_454665: return 0x0009AD90;
+			//case _product_version_ms28_479394: return 0x0009AF90;
+			case _product_version_ms29_498295: return 0x0009BE90;
+			case _product_version_ms29_530945: return 0x0009BE90;
+			case _product_version_ms29_533032: return 0x0009BBE0;
+			case _product_version_ms29_554482: return 0x0009C110;
+			case _product_version_ms29_571698: return 0x0009BE90;
+			case _product_version_ms29_604673: return 0x0009BF90;
+			//case _product_version_ms30_700255: return 0x0009C9A0;
 		}
 		return 0;
 	}
@@ -162,22 +174,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x00098E20ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x00098DE0ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x00098E60ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x00099150ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x0009B030ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x0009B030ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x0009B030ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009BF30ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009BF30ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009BC80ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009C1B0ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009BF30ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009C030ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009CA40ul);
+			//case _product_version_ms26_301003: return 0x00098E20;
+			//case _product_version_ms26_332089: return 0x00098DE0;
+			//case _product_version_ms27_373869: return 0x00098E60;
+			//case _product_version_ms27_416138: return 0x00099150;
+			//case _product_version_ms28_430653: return 0x0009B030;
+			//case _product_version_ms28_454665: return 0x0009B030;
+			//case _product_version_ms28_479394: return 0x0009B030;
+			case _product_version_ms29_498295: return 0x0009BF30;
+			case _product_version_ms29_530945: return 0x0009BF30;
+			case _product_version_ms29_533032: return 0x0009BC80;
+			case _product_version_ms29_554482: return 0x0009C1B0;
+			case _product_version_ms29_571698: return 0x0009BF30;
+			case _product_version_ms29_604673: return 0x0009C030;
+			//case _product_version_ms30_700255: return 0x0009CA40;
 		}
 		return 0;
 	}
@@ -188,22 +202,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x0021C750ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x0021C6B0ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x0021C900ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x0021CB70ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x0021F0B0ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x0021F0B0ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x0021F0B0ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x002204F0ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x002204F0ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x002202A0ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x002207C0ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x002205C0ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x002206A0ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x002287C0ul);
+			//case _product_version_ms26_301003: return 0x0021C750;
+			//case _product_version_ms26_332089: return 0x0021C6B0;
+			//case _product_version_ms27_373869: return 0x0021C900;
+			//case _product_version_ms27_416138: return 0x0021CB70;
+			//case _product_version_ms28_430653: return 0x0021F0B0;
+			//case _product_version_ms28_454665: return 0x0021F0B0;
+			//case _product_version_ms28_479394: return 0x0021F0B0;
+			case _product_version_ms29_498295: return 0x002204F0;
+			case _product_version_ms29_530945: return 0x002204F0;
+			case _product_version_ms29_533032: return 0x002202A0;
+			case _product_version_ms29_554482: return 0x002207C0;
+			case _product_version_ms29_571698: return 0x002205C0;
+			case _product_version_ms29_604673: return 0x002206A0;
+			//case _product_version_ms30_700255: return 0x002287C0;
 		}
 		return 0;
 	}
@@ -214,22 +230,24 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		switch (version_get())
+		s_module_version module_version;
+		module_version_get(module_version);
+		switch (module_version.product_version.value)
 		{
-			//CASE_RETURN(_product_version_ms26_release_00_1_301003, 0x0009A630ul);
-			//CASE_RETURN(_product_version_live_release_04_1_332089, 0x0009A5D0ul);
-			//CASE_RETURN(_product_version_live_release_08_1_373869, 0x0009A5C0ul);
-			//CASE_RETURN(_product_version_live_release_09_1_416138, 0x0009A8B0ul);
-			//CASE_RETURN(_product_version_live_release_10_1_430653, 0x0009C790ul);
-			//CASE_RETURN(_product_version_live_release_10_1_454665, 0x0009C790ul);
-			//CASE_RETURN(_product_version_live_release_10_1_479394, 0x0009C790ul);
-			CASE_RETURN(_product_version_live_release_11_1_498295, 0x0009D6F0ul);
-			CASE_RETURN(_product_version_live_release_11_1_530945, 0x0009D6F0ul);
-			CASE_RETURN(_product_version_live_release_11_1_533032, 0x0009D440ul);
-			CASE_RETURN(_product_version_live_release_11_1_554482, 0x0009D970ul);
-			CASE_RETURN(_product_version_live_release_11_1_571698, 0x0009D6F0ul);
-			CASE_RETURN(_product_version_live_release_11_1_604673, 0x0009D800ul);
-			//CASE_RETURN(_product_version_ms30_release_12_1_700255, 0x0009E200ul);
+			//case _product_version_ms26_301003: return 0x0009A630;
+			//case _product_version_ms26_332089: return 0x0009A5D0;
+			//case _product_version_ms27_373869: return 0x0009A5C0;
+			//case _product_version_ms27_416138: return 0x0009A8B0;
+			//case _product_version_ms28_430653: return 0x0009C790;
+			//case _product_version_ms28_454665: return 0x0009C790;
+			//case _product_version_ms28_479394: return 0x0009C790;
+			case _product_version_ms29_498295: return 0x0009D6F0;
+			case _product_version_ms29_530945: return 0x0009D6F0;
+			case _product_version_ms29_533032: return 0x0009D440;
+			case _product_version_ms29_554482: return 0x0009D970;
+			case _product_version_ms29_571698: return 0x0009D6F0;
+			case _product_version_ms29_604673: return 0x0009D800;
+			//case _product_version_ms30_700255: return 0x0009E200;
 		}
 		return 0;
 	}

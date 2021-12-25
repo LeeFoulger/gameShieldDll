@@ -11,7 +11,6 @@
 #include "framework.h"
 
 #define DLL_EXPORT extern "C" __declspec(dllexport)
-#define CASE_RETURN(case_value, return_value) case case_value: return return_value
 //#define BASE_ADDRESS_32BIT 0x400000
 #define BASE_ADDRESS_32BIT (1 << 22)
 
