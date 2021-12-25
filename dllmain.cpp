@@ -91,8 +91,8 @@ DWORD WINAPI main_loop(void* param)
 
 void on_dll_process_attach()
 {
-	c_string<wchar_t, 64> class_name = {};
-	unsigned long long product_version = version_get(&class_name);
+	s_module_version module_version;
+	module_version_get(module_version);
 
 	DWORD thread_id;
 	CreateThread(NULL, 0, main_loop, NULL, 0, &thread_id);
