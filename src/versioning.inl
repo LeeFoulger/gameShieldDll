@@ -94,7 +94,7 @@ s_module_info module_info_array[]
 	{ _product_version_ms30_700255, 0x565493D6, L"Halo Online Game Client cert_ms30_oct19_release_12.1.700255" }
 };
 
-void module_version_get(s_module_version& out_module_version)
+void module_info_get(s_module_info& out_module_info)
 {
 	static s_module_info module_info = { 0xFFFFFFFFFFFFFFFFull, 0, NULL };
 
