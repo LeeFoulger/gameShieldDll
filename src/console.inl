@@ -4,6 +4,8 @@ namespace console
 {
 	FILE* dummy_file = nullptr;
 
+	void on_console_create();
+
 #if _DEBUG
 	bool console_create = []() -> bool
 	{
@@ -14,6 +16,8 @@ namespace console
 			freopen_s(&dummy_file, "CONIN$", "r", stdin);
 
 			printf("console created\n");
+
+			on_console_create();
 
 			return true;
 		}
