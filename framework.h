@@ -4,6 +4,8 @@
 // Windows Header Files
 #include <windows.h>
 
+#include <assert.h>
+
 #include <dbghelp.h>
 #pragma comment(lib,"dbghelp.lib")
 
