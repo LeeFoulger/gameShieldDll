@@ -5,6 +5,7 @@
 #include <windows.h>
 
 #include <assert.h>
+#include <ctime>
 
 #include <dbghelp.h>
 #pragma comment(lib,"dbghelp.lib")

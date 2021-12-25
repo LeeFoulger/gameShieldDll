@@ -91,8 +91,8 @@ DWORD WINAPI main_loop(void* param)
 
 void on_dll_process_attach()
 {
-	s_module_version module_version;
-	module_version_get(module_version);
+	static s_module_info module_info = {};
+	module_info_get(module_info);
 
 	DWORD thread_id;
 	CreateThread(NULL, 0, main_loop, NULL, 0, &thread_id);

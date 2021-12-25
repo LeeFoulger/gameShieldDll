@@ -117,16 +117,16 @@ constexpr unsigned long get_game_options_size(c_enum<e_game_options, unsigned lo
 {
 	switch (version)
 	{
-	// 00.1.106708 to 00.1.177150
+	// 106708 to 177150
 	case _game_options_v0: return 0x24B48;
 
-	// 00.1.235640 to 04.1.332089
+	// 235640 to 332089
 	case _game_options_v1: return 0x245C8;
 
-	// 11.1.498295 to 11.1.604673
+	// 498295 to 604673
 	case _game_options_v2: return 0x1A048;
 
-	// 12.1.700255, no more builds available
+	// 700255, no more builds available
 	case _game_options_v3: return 0x1A248;
 	}
 

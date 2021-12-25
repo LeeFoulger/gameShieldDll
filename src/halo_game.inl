@@ -6,9 +6,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x04D033FC;
 			//case _product_version_ms26_332089: return 0x04D03370;
@@ -34,9 +34,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x00097B80;
 			//case _product_version_ms26_332089: return 0x00097B20;
@@ -62,9 +62,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x00097C10;
 			//case _product_version_ms26_332089: return 0x00097BB0;
@@ -90,9 +90,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x00098A60;
 			//case _product_version_ms26_332089: return 0x00098A20;
@@ -118,9 +118,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x00098AF0;
 			//case _product_version_ms26_332089: return 0x00098AB0;
@@ -146,9 +146,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x00098D80;
 			//case _product_version_ms26_332089: return 0x00098D40;
@@ -174,9 +174,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x00098E20;
 			//case _product_version_ms26_332089: return 0x00098DE0;
@@ -202,9 +202,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x0021C750;
 			//case _product_version_ms26_332089: return 0x0021C6B0;
@@ -230,9 +230,9 @@ namespace halo_game
 	{
 		printf("%s\n", __FUNCTION__);
 
-		s_module_version module_version;
-		module_version_get(module_version);
-		switch (module_version.product_version.value)
+		s_module_info module_info = {};
+		module_info_get(module_info);
+		switch (module_info.product_version.value)
 		{
 			//case _product_version_ms26_301003: return 0x0009A630;
 			//case _product_version_ms26_332089: return 0x0009A5D0;
