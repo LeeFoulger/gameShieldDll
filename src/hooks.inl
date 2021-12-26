@@ -140,6 +140,24 @@ void sslBinder_handler(const char* function_name, long a1, long a2, long a3, lon
 // this function is extremely fucking slow
 unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_name)
 {
+	{
+		s_module_info module_info;
+		module_info_get(module_info);
+
+		c_string<char, 4096> str;
+		sprintf_s(str, "SSL_hook_offsets(%lld.%lld.%lld %llX)", module_info.product_version.split.major_version, module_info.product_version.split.minor_version, module_info.product_version.split.build_number, module_info.timestamp);
+
+		unsigned long value = 'NONE';
+		g_config.read_ulong(&value, str, ssl_function_name, true);
+
+		if (value != 'NONE')
+		{
+			printf("CONFIG: %s\n", ssl_function_name);
+
+			return value;
+		}
+	}
+
 	c_vector<unsigned long> references0 = get_all_strings_startswith(ssl_function_name);
 	if (!references0.size())
 		return 0;
@@ -229,6 +247,17 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 			return 0;
 
 		unsigned long result = module_address_to_offset(module_reference<unsigned long>(NULL, calls[0] + 2));
+
+		{
+			s_module_info module_info;
+			module_info_get(module_info);
+
+			c_string<char, 4096> str;
+			sprintf_s(str, "SSL_hook_offsets(%lld.%lld.%lld %llX)", module_info.product_version.split.major_version, module_info.product_version.split.minor_version, module_info.product_version.split.build_number, module_info.timestamp);
+
+			g_config.write_ulong(result, str, ssl_function_name, true);
+		}
+
 		return result;
 	}
 

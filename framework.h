@@ -11,4 +11,8 @@
 #pragma comment(lib,"dbghelp.lib")
 
 #include <shlobj.h>
+
+#include <shlwapi.h>
+#pragma comment(lib,"Shlwapi.lib")
+
 #include <stdio.h>

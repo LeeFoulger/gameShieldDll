@@ -97,10 +97,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\config.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\config.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="src\enums.cpp" />
     <ClCompile Include="pch.cpp">
@@ -121,7 +123,6 @@
     <None Include="src\gameShieldDll.inl" />
     <None Include="src\memory.inl" />
     <None Include="src\versioning.inl" />
-    <None Include="vcpkg.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,6 @@
 ﻿#include "pch.h"
 
+static c_config g_config("config.ini");
 
 #include "gameShieldDll.inl"
 

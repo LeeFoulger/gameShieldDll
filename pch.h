@@ -10,11 +10,14 @@
 // add headers that you want to pre-compile here
 #include "framework.h"
 
+#define DLL_NAME "gameShieldDll.dll"
+
 #define DLL_EXPORT extern "C" __declspec(dllexport)
 //#define BASE_ADDRESS_32BIT 0x400000
 #define BASE_ADDRESS_32BIT (1 << 22)
 
 #include "enums.h"
 #include "types.h"
+#include "config.h"
 
 #endif //PCH_H
