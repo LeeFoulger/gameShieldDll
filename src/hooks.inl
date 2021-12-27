@@ -1,4 +1,36 @@
 
+void(*on_game_update_begin)(void) = nullptr;
+void(*on_game_update_end)(void) = nullptr;
+
+unsigned long get_game_update_call_module_offset()
+{
+	printf("%s called\n", __FUNCTION__);
+
+	s_module_info module_info;
+	module_info_get(module_info);
+	switch (module_info.product_version.value)
+	{
+	case _product_version_ms29_604673: return 0x000959E7;
+	}
+
+	return 0;
+}
+
+void __fastcall game_update(int, float*);
+char* game_update_address = patch_call(NULL, get_game_update_call_module_offset(), &game_update);
+void __fastcall game_update(int a1, float* a2)
+{
+	void(__fastcall* func)(int, float*) = reinterpret_cast<decltype(func)>(game_update_address);
+
+	if (on_game_update_begin)
+		on_game_update_begin();
+
+	func(a1, a2);
+
+	if (on_game_update_end)
+		on_game_update_end();
+}
+
 #define SSL_BINDER_HOOK(module_name, call_func, print_call, func_name, ...) \
 long __cdecl func_name(long, long, long, long, volatile long**); \
 s_module_patch* func_name##_hook = patch_memaddr(module_name, get_ssl_binder_function_module_offset(###func_name), func_name, sizeof(void*)); \
