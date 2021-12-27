@@ -216,6 +216,27 @@ s_module_patch* patch_memset(const wchar_t* module_name, unsigned long offset, l
 	return module_patch;
 }
 
+
+unsigned long call_to_function_offset(char* call_addr);
+unsigned long call_to_function_offset(unsigned long call_offset);
+
+char* patch_call(const wchar_t* module_name, unsigned long offset, const void* src, bool enabled = true)
+{
+	char* module_address = module_memory(module_name) + offset;
+	if (module_address == module_memory(module_name) || module_address - offset == 0)
+		return nullptr;
+
+	char* function_address = module_memory(module_name) + call_to_function_offset(offset);
+
+	unsigned char temp_jump[5] = { 0xE8, 0x90, 0x90, 0x90, 0x90 };
+	unsigned long jump_size = ((unsigned long)src - (unsigned long)module_address - 5);
+
+	vmemcpy(&temp_jump[1], &jump_size, 4);
+	vmemcpy(module_address, temp_jump, 5);
+
+	return function_address;
+}
+
 s_module_patch* patch_memcpy(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size, bool enabled = true)
 {
 	char* module_address = module_memory(module_name) + offset;
