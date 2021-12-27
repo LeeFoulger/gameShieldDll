@@ -96,6 +96,25 @@ void module_get_nt_header(const wchar_t* module_name, PIMAGE_NT_HEADERS* out_nt_
 	}
 }
 
+void module_get_section_by_name(const wchar_t* module_name, const char* section_name, PIMAGE_SECTION_HEADER* out_section)
+{
+	PIMAGE_NT_HEADERS nt_header = nullptr;
+	module_get_nt_header(module_name, &nt_header);
+
+	const PIMAGE_SECTION_HEADER section = IMAGE_FIRST_SECTION(nt_header);
+	unsigned short section_count = nt_header->FileHeader.NumberOfSections;
+
+	while (section_count)
+	{
+		if (strcmp((char*)section->Name, section_name) == 0)
+			break;
+
+		section_count--;
+	}
+
+	*out_section = section;
+}
+
 char* module_memory(const wchar_t* module_name, unsigned long* memory_size = nullptr)
 {
 	char* memory = reinterpret_cast<char*>(GetModuleHandle(module_name));
