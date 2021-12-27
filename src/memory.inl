@@ -549,3 +549,11 @@ namespace rtti
 		}
 	}
 }
+
+char*& tls_get(unsigned long offset = 0)
+{
+	char* teb = reinterpret_cast<char*>(NtCurrentTeb());
+	unsigned long* tls_ptr = *reinterpret_cast<unsigned long**>(teb + 0x2C);
+
+	return *reinterpret_cast<char**>(*tls_ptr + offset);
+}
