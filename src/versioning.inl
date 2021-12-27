@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 union u_product_version
 {
 	unsigned long long value;
@@ -113,4 +111,27 @@ void module_info_get(s_module_info& out_module_info)
 	}
 
 	::memcpy(&out_module_info, &module_info, sizeof(s_module_info));
+}
+
+namespace ms29_604673
+{
+	struct s_thread_local_storage
+	{
+		char* __unknown[8];
+		struct global_preferences* g_global_preferences;
+		struct game_globals* g_game_globals;
+		char* __data28[202];
+	};
+}
+
+unsigned long tls_get_game_globals_offset()
+{
+	s_module_info module_info;
+	module_info_get(module_info);
+	switch (module_info.product_version.value)
+	{
+	case _product_version_ms29_604673: return offsetof(ms29_604673::s_thread_local_storage, g_game_globals);
+	}
+
+	return 0xFFFFFFFF;
 }
