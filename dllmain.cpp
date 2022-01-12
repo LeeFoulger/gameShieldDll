@@ -119,5 +119,3 @@ void on_dll_process_attach()
 	unsigned long thread_id;
 	create_thread(main_loop, &thread_id);
 }
-
-}
