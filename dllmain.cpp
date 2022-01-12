@@ -15,6 +15,7 @@ static c_config g_config("config.ini");
 #include "halo_game.inl"
 #include "patches.inl"
 #include "hooks.inl"
+#include "key_handler.inl"
 
 void on_dll_process_attach();
 
@@ -64,7 +65,7 @@ namespace frost
 	}
 }
 
-DWORD WINAPI main_loop(void* param)
+DWORD WINAPI main_loop(LPVOID)
 {
 	char* command_line = get_command_line();
 
@@ -72,22 +73,26 @@ DWORD WINAPI main_loop(void* param)
 	halo_game::populate_game_load_map_offsets();
 
 
-	bool running = true;
-	while (running)
-	{
-		if (GetAsyncKeyState(VK_F1) & 0x8000)
-		{
-			game_reload_map();
-		}
-		if (GetAsyncKeyState(VK_F2) & 0x8000)
-		{
-			game_load_map_dialog();
-		}
-
-		Sleep(50);
-	}
-
 	return 0;
+}
+
+namespace key_handler
+{
+	LRESULT WINAPI window_proc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+	{
+		if (uMsg == WM_KEYDOWN)
+		{
+			on_key_press(wParam, VK_F1, game_reload_map);
+			on_key_press(wParam, VK_F2, game_load_map_dialog);
+		}
+
+		return CallWindowProcW(reinterpret_cast<WNDPROC>(original_window_proc), hWnd, uMsg, wParam, lParam);
+	}
+}
+
+HANDLE create_thread(DWORD(WINAPI* thread_func)(LPVOID), LPDWORD thread_id, LPVOID param = NULL)
+{
+	return CreateThread(NULL, 0, thread_func, param, 0, thread_id);
 }
 
 void on_dll_process_attach()
@@ -95,6 +100,12 @@ void on_dll_process_attach()
 	static s_module_info module_info = {};
 	module_info_get(module_info);
 
-	DWORD thread_id;
-	CreateThread(NULL, 0, main_loop, NULL, 0, &thread_id);
+
+	unsigned long key_handler_thread_id;
+	create_thread(key_handler::thread_func, &key_handler_thread_id, &module_info);
+
+	unsigned long thread_id;
+	create_thread(main_loop, &thread_id);
+}
+
 }

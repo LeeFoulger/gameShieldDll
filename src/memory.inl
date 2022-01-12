@@ -174,11 +174,15 @@ void* module_memset(const wchar_t* module_name, unsigned long offset, long val, 
 	return ::vmemset(module_address, val, size);
 }
 
-unsigned long module_offset_from_pattern(const wchar_t* module_name, const char* pattern, const char* mask)
+unsigned long module_offset_from_pattern(const wchar_t* module_name, const char* pattern, const char* mask, unsigned long start_offset = 0, unsigned long max_size = 0)
 {
 	unsigned long memory_size = 0;
 	char* memory = module_memory(module_name, &memory_size);
-	char* result = find_pattern(memory, memory_size, pattern, mask);
+
+	if (max_size)
+		memory_size = max_size;
+
+	char* result = find_pattern(memory + start_offset, memory_size, pattern, mask);
 
 	return result ? result - memory : 0;
 }

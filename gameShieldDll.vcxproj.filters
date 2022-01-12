@@ -76,5 +76,8 @@
     <None Include="src\hooks.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="src\key_handler.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -118,6 +118,7 @@
     <None Include="src\file.inl" />
     <None Include="src\halo_game.inl" />
     <None Include="src\hooks.inl" />
+    <None Include="src\key_handler.inl" />
     <None Include="src\patches.inl" />
     <None Include="src\types.h" />
     <None Include="src\gameShieldDll.inl" />

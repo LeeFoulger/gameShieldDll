@@ -570,20 +570,23 @@ void game_load_map(const char* scenario_path, c_enum<e_game_mode, unsigned long>
 	halo_game::main_game_change(options);
 }
 
-void game_reload_map()
+void game_reload_map(void* userdata = nullptr)
 {
 	if (halo_game::main_game_pending_game_options)
 		halo_game::main_game_change(*halo_game::main_game_pending_game_options);
 }
 
-void game_load_map_dialog()
+void game_load_map_dialog(void* userdata = nullptr)
 {
 	c_path scenario_path{};
 	unsigned long cache_file_type = -1;
 
 	COMDLG_FILTERSPEC file_filter[] = { { L"Map File", L"*.map" } };
 	s_file_open_dialog_parameters parameters = { L"maps", L"mainmenu.map", file_filter, _countof(file_filter), L"Load Map" };
+
+	ShowCursor(TRUE);
 	file_open_dialog(scenario_path, parameters);
+	ShowCursor(FALSE);
 
 	s_cache_file_header* cache_file_header = nullptr;
 	if (read_structure_from_file(&cache_file_header, scenario_path))
