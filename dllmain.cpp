@@ -100,6 +100,18 @@ void on_dll_process_attach()
 	static s_module_info module_info = {};
 	module_info_get(module_info);
 
+	{
+		PIMAGE_NT_HEADERS nt_header;
+		module_get_nt_header(NULL, &nt_header);
+
+		char datetime_str[80]{};
+		time_to_str(&nt_header->FileHeader.TimeDateStamp, &datetime_str, "%Y-%m-%d");
+
+		char product_version_str[80]{};
+		product_version_to_str(module_info.product_version, &product_version_str);
+
+		printf("Halo Online (%s %s)\n", product_version_str, datetime_str);
+	}
 
 	unsigned long key_handler_thread_id;
 	create_thread(key_handler::thread_func, &key_handler_thread_id, &module_info);

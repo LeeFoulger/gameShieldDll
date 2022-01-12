@@ -12,9 +12,46 @@ union u_product_version
 	} split;
 };
 
+template<size_t buffer_size = 0>
+void product_version_to_str(u_product_version version, char(*buffer)[buffer_size])
+{
+	if (!buffer || !buffer_size)
+		return;
+
+	sprintf_s(*buffer, buffer_size, "%lld.%lld.%lld", version.split.major_version, version.split.minor_version, version.split.build_number);
+}
+
 constexpr unsigned long long make_product_version(unsigned long long a, unsigned long long b, unsigned long long c)
 {
 	return ((a << 0) | (b << 16) | (c << 32));
+}
+
+time_t make_time_date(unsigned long year, unsigned long mon, unsigned long mday, unsigned long hour, unsigned long min, unsigned long sec)
+{
+	struct tm t;
+	time_t t_of_day;
+
+	t.tm_year = year - 1900;
+	t.tm_mon = mon;
+	t.tm_mday = mday;
+	t.tm_hour = hour;
+	t.tm_min = min;
+	t.tm_sec = sec;
+	t_of_day = mktime(&t);
+
+	return t_of_day;
+}
+
+template<typename t_type, size_t buffer_size = 0>
+void time_to_str(t_type* rawtime, char(*buffer)[buffer_size], const char* format = "%Y-%m-%d %H:%M:%S")
+{
+	if (!buffer || !buffer_size)
+		return;
+
+	struct tm ts;
+	localtime_s(&ts, reinterpret_cast<time_t*>(rawtime));
+
+	strftime(*buffer, buffer_size, format, &ts);
 }
 
 struct s_module_info
