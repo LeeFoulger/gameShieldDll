@@ -6,9 +6,9 @@
 ### Info:
 - Go to the root game directory
 - Create a new folder called `bin` and place `gameShieldDll.dll` in there
- - Should look something like `C:\Games\HaloOnline\bin\gameShieldDll.dll`
+  - Should look something like `C:\Games\HaloOnline\bin\gameShieldDll.dll`
 - Copy `launch_client.bat` from the git repo
- - Should look something like `C:\Games\HaloOnline\launch_client.bat`
+  - Should look something like `C:\Games\HaloOnline\launch_client.bat`
 - Run `launch_client.bat` to load the game client
 
 ### Hotkeys:
