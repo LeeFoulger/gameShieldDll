@@ -47,12 +47,6 @@ private:
 template<typename t_enum, typename t_type>
 using c_flags = t_type;
 
-template<typename t_type, unsigned long size>
-using c_string = t_type[size];
-
-using c_path = c_string<char, MAX_PATH>;
-using c_path_wide = c_string<wchar_t, MAX_PATH>;
-
 struct s_vfile_info
 {
 	c_string<char, 256> name;

@@ -16,6 +16,7 @@
 //#define BASE_ADDRESS_32BIT 0x400000
 #define BASE_ADDRESS_32BIT (1 << 22)
 
+#include "strings.h"
 #include "enums.h"
 #include "types.h"
 #include "config.h"
