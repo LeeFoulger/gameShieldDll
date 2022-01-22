@@ -66,15 +66,16 @@ namespace frost
 	}
 }
 
-DWORD WINAPI main_loop(LPVOID)
+DWORD WINAPI main_loop(LPVOID param)
 {
 	char* command_line = get_command_line();
 
 	backend_session_bypass();
 	halo_game::populate_game_load_map_offsets();
 
+	//game_load_map("guardian", _game_mode_multiplayer, k_default_game_engine_multiplayer_variant);
 
-	return 0;
+	return S_OK;
 }
 
 namespace key_handler
