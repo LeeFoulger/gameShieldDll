@@ -122,6 +122,7 @@
     <None Include="src\hooks.inl" />
     <None Include="src\key_handler.inl" />
     <None Include="src\patches.inl" />
+    <None Include="src\simple_patch.inl" />
     <None Include="src\types.h" />
     <None Include="src\gameShieldDll.inl" />
     <None Include="src\memory.inl" />

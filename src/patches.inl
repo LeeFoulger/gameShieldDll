@@ -2,6 +2,7 @@
 
 namespace patches
 {
+	/*
 	namespace bink
 	{
 		s_module_patch* bink_format_string_patch = patch_memset(NULL, module_offset_from_pattern(NULL, "bink\\%s.bik", "xxxxxxxxxxx"), '_', sizeof('_'));
@@ -12,6 +13,7 @@ namespace patches
 				bink_format_string_patch->toggle();
 		}
 	}
+	*/
 
 	namespace contrails
 	{

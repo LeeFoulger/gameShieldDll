@@ -15,6 +15,7 @@
 #define DLL_EXPORT extern "C" __declspec(dllexport)
 //#define BASE_ADDRESS_32BIT 0x400000
 #define BASE_ADDRESS_32BIT (1 << 22)
+#define ALIGN(value, alignment_bits) ((value) + ((1 << alignment_bits) - 1)) & -(1 << alignment_bits);
 
 #include "strings.h"
 #include "enums.h"

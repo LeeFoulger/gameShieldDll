@@ -34,7 +34,7 @@ public:
 	}
 
 	t_type*& get() { return elements; }
-	t_type& size() { return count; }
+	unsigned long& size() { return count; }
 	bool is_valid() { return elements && count; }
 
 	t_type& operator[](unsigned long index) { return elements[index]; }

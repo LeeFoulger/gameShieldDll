@@ -16,6 +16,7 @@ static c_config g_config("config.ini");
 #include "patches.inl"
 #include "hooks.inl"
 #include "key_handler.inl"
+#include "simple_patch.inl"
 
 void on_dll_process_attach();
 
@@ -97,6 +98,11 @@ HANDLE create_thread(DWORD(WINAPI* thread_func)(LPVOID), LPDWORD thread_id, LPVO
 
 void on_dll_process_attach()
 {
+	{
+		runtime_patch_manager::write_patch_file("skip_intros.patch");
+		runtime_patch_manager::read_files_from_folder("patches");
+	}
+
 	static s_module_info module_info = {};
 	module_info_get(module_info);
 

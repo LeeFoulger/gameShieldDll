@@ -14,8 +14,8 @@ void c_config::read_as_format(t_type* out_value, const char* format, const char*
 	if (!out_value)
 		return;
 
-	c_string<char, 4096> default_str;
 	c_string<char, 4096> str;
+	decltype(str) default_str;
 
 	sprintf_s(default_str, format, *out_value);
 	GetPrivateProfileStringA(section, key, default_str, str, sizeof(str), m_filename);
