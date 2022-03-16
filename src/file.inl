@@ -64,7 +64,7 @@ bool write_data_to_file(char* data, unsigned long size, const char* filename)
 	return false;
 }
 
-void find_files(const char* find_str, c_vector<char*>* files, bool absolute_path = false)
+void find_files(const char* find_str, c_vector<char*>* files, bool absolute_path = true)
 {
 	c_path find_path, dll_dir;
 	GetModuleFileNameA(GetModuleHandleA(DLL_NAME), dll_dir, _countof(dll_dir));
@@ -97,7 +97,7 @@ void find_files(const char* find_str, c_vector<char*>* files, bool absolute_path
 	FindClose(find_handle);
 }
 
-void find_files(const wchar_t* find_str, c_vector<wchar_t*>* files, bool absolute_path = false)
+void find_files(const wchar_t* find_str, c_vector<wchar_t*>* files, bool absolute_path = true)
 {
 	c_path_wide find_path, dll_dir;
 	GetModuleFileNameW(GetModuleHandleA(DLL_NAME), dll_dir, _countof(dll_dir));

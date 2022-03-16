@@ -116,6 +116,11 @@ namespace runtime_patch_manager
 				continue;
 
 			if (header->header_signature != 'head' || header->footer_signature != 'foot')
+				continue;
+
+			if (header->file_version != 1)
+				continue;
+
 			if (*header->name)
 			{
 				console_print("[Runtime Patch Manager] %s", header->name);
