@@ -488,10 +488,10 @@ namespace rtti
 
 				if (strstr(address, to_find) != 0)
 				{
-					printf("0x%08lX, %s\n", BASE_ADDRESS_32BIT + references[reference_index], address);
+					console_print("0x%08lX, %s\n", BASE_ADDRESS_32BIT + references[reference_index], address);
 				}
 
-				printf("");
+				console_print("");
 			}
 		}
 	}
@@ -517,16 +517,16 @@ namespace rtti
 				{
 					if (strstr(buff, to_find) != 0)
 					{
-						printf("0x%08lX, %s\n", BASE_ADDRESS_32BIT + references[reference_index], buff);
+						console_print("0x%08lX, %s\n", BASE_ADDRESS_32BIT + references[reference_index], buff);
 					}
 				}
 				else
 				{
-					printf("error %x\n", GetLastError());
+					console_print("error %x\n", GetLastError());
 				}
 				delete[] str;
 
-				printf("");
+				console_print("");
 			}
 		}
 	}

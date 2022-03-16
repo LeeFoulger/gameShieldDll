@@ -23,3 +23,6 @@
 #include "config.h"
 
 #endif //PCH_H
+
+int console_print(const char* format, ...);
+int console_print(const wchar_t* format, ...);

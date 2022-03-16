@@ -19,7 +19,7 @@ namespace patches
 	{
 		unsigned long get_contrail_render_patch_module_offset()
 		{
-			printf("%s\n", __FUNCTION__);
+			console_print("%s\n", __FUNCTION__);
 
 			char pattern[] = "\x8A\x86\x2C\x01\x00\x00\xC0\xE8\x07\x89\x7D\xFC\xA8\x01";
 			c_vector<unsigned long> references = find_all_references_with_length(pattern, _countof(pattern));
@@ -103,7 +103,7 @@ namespace patches
 	{
 		unsigned long get_director_render_patch_module_offset()
 		{
-			printf("%s\n", __FUNCTION__);
+			console_print("%s\n", __FUNCTION__);
 
 			c_vector<unsigned long> references = get_all_strings_startswith("pan-cam");
 
@@ -194,7 +194,7 @@ namespace patches
 	{
 		void get_language_patch_offsets(unsigned long* out_patch0_offset, unsigned long* out_patch1_offset)
 		{
-			printf("%s\n", __FUNCTION__);
+			console_print("%s\n", __FUNCTION__);
 
 			static c_vector<unsigned long> patch_offsets;
 
@@ -248,7 +248,7 @@ namespace patches
 
 		unsigned long get_language_patch0_module_offset()
 		{
-			printf("%s\n", __FUNCTION__);
+			console_print("%s\n", __FUNCTION__);
 
 			unsigned long result = 0;
 			get_language_patch_offsets(&result, nullptr);
@@ -258,7 +258,7 @@ namespace patches
 
 		unsigned long get_language_patch1_module_offset()
 		{
-			printf("%s\n", __FUNCTION__);
+			console_print("%s\n", __FUNCTION__);
 
 			unsigned long result = 0;
 			get_language_patch_offsets(nullptr, &result);
@@ -282,7 +282,7 @@ namespace patches
 	{
 		unsigned long get_game_engine_render_watermarks_patch_module_offset()
 		{
-			printf("%s\n", __FUNCTION__);
+			console_print("%s\n", __FUNCTION__);
 
 			c_vector<unsigned long> references = get_all_wstrings_startswith(L"%s|nBuild %s %s %s|n%s");
 			if (!references.size())
@@ -338,7 +338,7 @@ void game_set_language(c_enum<e_language, unsigned char> selected_language = k_d
 
 void backend_session_bypass()
 {
-	printf("%s\n", __FUNCTION__);
+	console_print("%s\n", __FUNCTION__);
 
 	const char* backend_session_offline_find = "   var BACKEND_SESSION_OFFLINE                  : int    = 0";
 	const char* backend_session_online_find  = "   var BACKEND_SESSION_ONLINE                   : int    = 3";

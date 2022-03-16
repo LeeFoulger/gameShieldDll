@@ -4,7 +4,7 @@ namespace halo_game
 {
 	unsigned long get_command_line_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -32,7 +32,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_set_last_language_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -60,7 +60,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_get_last_language_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -88,7 +88,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_get_fullscreen_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -116,7 +116,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_set_fullscreen_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -144,7 +144,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_get_screen_resolution_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -172,7 +172,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_set_screen_resolution_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -200,7 +200,7 @@ namespace halo_game
 
 	unsigned long get_force_display_update_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -228,7 +228,7 @@ namespace halo_game
 
 	unsigned long get_global_preferences_set_hide_watermark_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		s_module_info module_info = {};
 		module_info_get(module_info);
@@ -256,7 +256,7 @@ namespace halo_game
 
 	void get_virtual_files_offsets(unsigned long* out_vfiles_buffer_offset, unsigned long* out_vfiles_offset)
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		unsigned long vfiles_buffer_offset = 0;
 		unsigned long vfiles_offset = 0;
@@ -312,7 +312,7 @@ namespace halo_game
 
 	unsigned long get_virtual_files_buffer_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		unsigned long result = 0;
 		get_virtual_files_offsets(&result, nullptr);
@@ -323,7 +323,7 @@ namespace halo_game
 
 	unsigned long get_virtual_files_module_offset()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		unsigned long result = 0;
 		get_virtual_files_offsets(nullptr, &result);
@@ -351,7 +351,7 @@ namespace halo_game
 
 	void populate_game_load_map_offsets()
 	{
-		printf("%s\n", __FUNCTION__);
+		console_print("%s\n", __FUNCTION__);
 
 		{
 			c_vector<unsigned long> references0 = get_all_strings_startswith("levels\\solo\\s3d_tutorial\\s3d_tutorial");
@@ -433,7 +433,7 @@ namespace halo_game
 				main_game_pending_game_options = module_pointer<s_game_options>(NULL, push_to_data_offset(call_to_function_offset(calls[7]) + 0xD));
 				return;
 			}
-			printf("");
+			console_print("");
 		}
 
 		char tutorial_scenario_path[] = "levels\\solo\\s3d_tutorial\\s3d_tutorial";

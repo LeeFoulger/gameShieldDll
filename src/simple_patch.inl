@@ -115,11 +115,16 @@ namespace runtime_patch_manager
 			if (patch_size != header->file_size)
 				continue;
 
+			if (header->header_signature != 'head' || header->footer_signature != 'foot')
 			if (*header->name)
-				printf("%s\n", header->name);
+			{
+				console_print("[Runtime Patch Manager] %s", header->name);
 
-			if (*header->description)
-				printf("%s\n", header->description);
+				if (*header->description)
+					console_print("(%s)", header->description);
+
+				console_print("\n");
+			}
 
 			const char* pattern = patch + header->pattern_offset;
 			const char* mask = patch + header->mask_offset;
@@ -145,13 +150,13 @@ namespace runtime_patch_manager
 			}
 			default:
 			{
-				printf("unknown patch type: %hi\n", header->file_type);
+				console_print("unknown patch type: %hi\n", header->file_type);
 				break;
 			}
 			}
 		}
 
-		printf("");
+		console_print("");
 	}
 
 };

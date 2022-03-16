@@ -7,7 +7,7 @@ namespace console
 	void on_console_create();
 
 #if _DEBUG
-	bool console_create = []() -> bool
+	bool console_created = []() -> bool
 	{
 		if (AllocConsole())
 		{
@@ -15,7 +15,7 @@ namespace console
 			freopen_s(&dummy_file, "CONOUT$", "w", stderr);
 			freopen_s(&dummy_file, "CONIN$", "r", stdin);
 
-			printf("console created\n");
+			console_print("console created\n");
 
 			on_console_create();
 

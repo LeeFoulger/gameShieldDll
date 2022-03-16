@@ -4,7 +4,7 @@ void(*on_game_update_end)(void) = nullptr;
 
 unsigned long get_game_update_call_module_offset()
 {
-	printf("%s called\n", __FUNCTION__);
+	console_print("%s called\n", __FUNCTION__);
 
 	s_module_info module_info;
 	module_info_get(module_info);
@@ -29,6 +29,7 @@ void __fastcall game_update(int a1, float* a2)
 
 	if (on_game_update_end)
 		on_game_update_end();
+	console_print("");
 }
 
 #define SSL_BINDER_HOOK(module_name, call_func, print_call, func_name, ...) \
@@ -37,7 +38,7 @@ s_module_patch* func_name##_hook = patch_memaddr(module_name, get_ssl_binder_fun
 long __cdecl func_name(long a1, long a2, long a3, long a4, volatile long** a5) \
 { \
 	if (print_call) \
-		printf("%s called\n", __FUNCTION__); \
+		console_print("%s called\n", __FUNCTION__); \
 	long(__cdecl* func)(long, long, long, long, volatile long**) = *reinterpret_cast<decltype(func)*>(func_name##_hook->old_data); \
 	long result = 1; \
 	if (call_func) \
@@ -149,7 +150,7 @@ void SSL_HQ_Chat_handler(const wchar_t* message = L"")
 {
 	if (message)
 	{
-		wprintf(L"%s\n", message);
+		console_print(L"%s\n", message);
 
 		for (s_command& command : commands)
 		{
@@ -184,7 +185,7 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 
 		if (value != 'NONE')
 		{
-			printf("CONFIG: %s\n", ssl_function_name);
+			console_print("CONFIG: %s\n", ssl_function_name);
 
 			return value;
 		}
@@ -194,7 +195,7 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 	if (!references0.size())
 		return 0;
 
-	printf("%s\n", ssl_function_name);
+	console_print("%s\n", ssl_function_name);
 
 	unsigned long reference0 = references0[0];
 	char* data0 = module_pointer<char>(NULL, reference0);

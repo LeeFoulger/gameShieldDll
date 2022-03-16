@@ -42,27 +42,27 @@ namespace frost
 {
 	inline void on_frostSetUserName(const char* userName)
 	{
-		printf("frostSetUserName(%s)\n", userName);
+		console_print("frostSetUserName(%s)\n", userName);
 	}
 	inline void on_frostSetCharName(const char* charName)
 	{
-		printf("frostSetCharName(%s)\n", charName);
+		console_print("frostSetCharName(%s)\n", charName);
 	}
 	inline void on_frostInitialize(const char* moduleName)
 	{
-		printf("frostInitialize(%s)\n", moduleName);
+		console_print("frostInitialize(%s)\n", moduleName);
 	}
 	inline void on_frostFinalize()
 	{
-		printf("frostFinalize()\n");
+		console_print("frostFinalize()\n");
 	}
 	inline void on_frostSetUserNameW(const wchar_t* userName)
 	{
-		printf("frostSetUserNameW(%ls)\n", userName);
+		console_print("frostSetUserNameW(%ls)\n", userName);
 	}
 	inline void on_frostSetCharNameW(const wchar_t* charName)
 	{
-		printf("frostSetCharNameW(%ls)\n", charName);
+		console_print("frostSetCharNameW(%ls)\n", charName);
 	}
 }
 
@@ -102,6 +102,8 @@ void on_dll_process_attach()
 	{
 		runtime_patch_manager::write_patch_file("skip_intros.patch");
 		runtime_patch_manager::read_files_from_folder("patches");
+
+		console_print("");
 	}
 
 	static s_module_info module_info = {};
@@ -117,7 +119,7 @@ void on_dll_process_attach()
 		char product_version_str[80]{};
 		product_version_to_str(module_info.product_version, &product_version_str);
 
-		printf("Halo Online (%s %s)\n", product_version_str, datetime_str);
+		console_print("Halo Online (%s %s)\n", product_version_str, datetime_str);
 	}
 
 	unsigned long key_handler_thread_id;
