@@ -111,8 +111,8 @@ void on_dll_process_attach()
 			simple_patch_setup(patch, sizeof(patch), 1, _simple_patch_file_type_memset);
 			simple_patch_set_name(patch, "bink format string");
 			simple_patch_set_description(patch, "skip the intro video files");
-			simple_patch_set_pattern(patch, total_patch_size, "bink\\%s.bik");
-			simple_patch_set_mask(patch, total_patch_size, "xxxxxxxxxxx");
+			simple_patch_set_pattern(patch, total_patch_size, "bink\\%s.bik", sizeof("bink\\%s.bik") - 1);
+			simple_patch_set_mask(patch, total_patch_size, "xxxxxxxxxxx", sizeof("xxxxxxxxxxx") - 1);
 			simple_patch_set_data(patch, total_patch_size, patch_data, sizeof(patch_data) - 1);
 			simple_patch_write_file(patch, total_patch_size, "skip_intros.patch");
 		}

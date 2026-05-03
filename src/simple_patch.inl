@@ -51,6 +51,7 @@ namespace runtime_patch_manager
 	{
 		assert(patch != nullptr);
 		assert(patch_size >= sizeof(s_simple_patch_file_header));
+
 		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
 		header->header_signature = 'head';
@@ -80,34 +81,37 @@ namespace runtime_patch_manager
 		csstrnzcpy(header->description, description, sizeof(header->description));
 	}
 
-	void simple_patch_set_pattern(char* patch, unsigned long& file_size, const char* pattern)
+	void simple_patch_set_pattern(char* patch, unsigned long& file_size, const char* pattern, unsigned long pattern_size)
 	{
 		assert(patch != nullptr);
 		assert(pattern != nullptr);
+		assert(pattern_size > 0);
 
 		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
 		header->pattern_offset = file_size;
-		file_size += ALIGN(strlen(pattern), simple_patch_file_alignment_bits);
+		file_size += ALIGN(pattern_size, simple_patch_file_alignment_bits);
 		csstrnzcpy(patch + header->pattern_offset, pattern, file_size - header->pattern_offset);
 	}
 
-	void simple_patch_set_mask(char* patch, unsigned long& file_size, const char* mask)
+	void simple_patch_set_mask(char* patch, unsigned long& file_size, const char* mask, unsigned long mask_size)
 	{
 		assert(patch != nullptr);
 		assert(mask != nullptr);
+		assert(mask_size > 0);
 
 		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
 		header->mask_offset = file_size;
-		file_size += ALIGN(strlen(mask), simple_patch_file_alignment_bits);
-		csstrnzcpy(patch + header->mask_offset, "xxxxxxxxxxx", file_size - header->mask_offset);
+		file_size += ALIGN(mask_size, simple_patch_file_alignment_bits);
+		csstrnzcpy(patch + header->mask_offset, mask, file_size - header->mask_offset);
 	}
 
 	void simple_patch_set_data(char* patch, unsigned long& file_size, unsigned char* data, unsigned long data_size)
 	{
 		assert(patch != nullptr);
 		assert(data != nullptr);
+		assert(data_size > 0);
 
 		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
