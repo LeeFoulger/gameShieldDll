@@ -1,0 +1,18 @@
+{
+  "FileVersion": 2,
+  "Id": "af963661-7c3e-435e-bf0c-4b9ae4076643",
+  "Items": [
+    {
+      "Id": "85c505c8-86fb-4000-b38f-992df94f68c1",
+      "Command": "--account test"
+    },
+    {
+      "Id": "17975a5d-5a45-47e4-8820-f69f231e7e80",
+      "Command": "--sign-in-code 123"
+    },
+    {
+      "Id": "08a30b02-d02b-448f-ab74-8efd9ba90571",
+      "Command": "-window"
+    }
+  ]
+}

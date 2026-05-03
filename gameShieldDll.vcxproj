@@ -74,6 +74,12 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>
+IF "$(LocalDebuggerWorkingDirectory)" EQU "$(ProjectDir)" EXIT 0
+
+COPY /Y "$(TargetPath)" "$(LocalDebuggerWorkingDirectory)bin\gameShieldDll.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -95,6 +101,12 @@
       <EnableUAC>false</EnableUAC>
       <AdditionalLibraryDirectories>$(ProjectDir)lib\</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>
+IF "$(LocalDebuggerWorkingDirectory)" EQU "$(ProjectDir)" EXIT 0
+
+COPY /Y "$(TargetPath)" "$(LocalDebuggerWorkingDirectory)bin\gameShieldDll.dll"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h" />
