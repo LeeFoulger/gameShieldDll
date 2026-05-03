@@ -18,4 +18,4 @@
 ### bugs
 - Commands: invalid commands crash the game
 
-## [Download latest binary here!](https://github.com/twist84/gameShieldDll_/releases/)
+## [Download latest binary here!](https://github.com/LeeFoulger/gameShieldDll/releases/)

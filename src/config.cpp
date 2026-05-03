@@ -11,7 +11,7 @@ c_config::c_config(const char* filename, bool fullpath)
 template<typename t_type>
 void c_config::read_as_format(t_type* out_value, const char* format, const char* section, const char* key)
 {
-	if (out_value == nullptr)
+	if (out_value != nullptr)
 	{
 		c_string<char, 4096> str;
 		decltype(str) default_str;

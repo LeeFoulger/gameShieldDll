@@ -127,7 +127,9 @@ void on_dll_process_attach()
 	create_thread(main_loop, &thread_id);
 }
 
+#if _DEBUG
 void console::on_console_create()
 {
 }
+#endif // _DEBUG
 
