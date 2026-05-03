@@ -123,7 +123,7 @@ t_type* module_pointer(const wchar_t* module_name, unsigned long offset)
 	t_type* result = nullptr;
 
 	char* module_address = module_memory(module_name) + offset;
-	if (offset == 0 || module_address - offset == 0)
+	if (offset != 0 && module_address - offset != 0)
 	{
 		result = reinterpret_cast<t_type*>(module_address);
 	}
@@ -142,7 +142,7 @@ void* module_memcpy(const wchar_t* module_name, unsigned long offset, const void
 	void* result = nullptr;
 
 	char* module_address = module_memory(module_name) + offset;
-	if (module_address - offset == 0)
+	if ((unsigned long)module_address - offset != 0)
 	{
 		result = ::vmemcpy(module_address, src, size);
 	}
@@ -155,7 +155,7 @@ void* module_memmove(const wchar_t* module_name, unsigned long offset, const voi
 	void* result = nullptr;
 
 	char* module_address = module_memory(module_name) + offset;
-	if (module_address - offset == 0)
+	if ((unsigned long)module_address - offset != 0)
 	{
 		result = ::vmemmove(module_address, src, size);
 	}
@@ -168,7 +168,7 @@ void* module_memset(const wchar_t* module_name, unsigned long offset, long val, 
 	void* result = nullptr;
 
 	char* module_address = module_memory(module_name) + offset;
-	if (module_address - offset == 0)
+	if ((unsigned long)module_address - offset != 0)
 	{
 		result = ::vmemset(module_address, val, size);
 	}
