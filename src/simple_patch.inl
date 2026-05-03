@@ -47,8 +47,12 @@ namespace runtime_patch_manager
 		patches[patch_count] = module_patch;
 	}
 
-	void simple_patch_setup(s_simple_patch_file_header* header, short file_version, short file_type)
+	void simple_patch_setup(char* patch, unsigned long patch_size, short file_version, short file_type)
 	{
+		assert(patch != nullptr);
+		assert(patch_size >= sizeof(s_simple_patch_file_header));
+		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
+
 		header->header_signature = 'head';
 		header->file_version = file_version;
 		header->file_type = file_type;
@@ -56,32 +60,57 @@ namespace runtime_patch_manager
 		header->footer_signature = 'foot';
 	}
 
-	void simple_patch_set_name(s_simple_patch_file_header* header, const char* name)
+	void simple_patch_set_name(char* patch, const char* name)
 	{
+		assert(patch != nullptr);
+		assert(name != nullptr);
+
+		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
+
 		csstrnzcpy(header->name, name, sizeof(header->name));
 	}
 
-	void simple_patch_set_description(s_simple_patch_file_header* header, const char* description)
+	void simple_patch_set_description(char* patch, const char* description)
 	{
+		assert(patch != nullptr);
+		assert(description != nullptr);
+
+		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
+
 		csstrnzcpy(header->description, description, sizeof(header->description));
 	}
 
-	void simple_patch_set_pattern(char* patch, s_simple_patch_file_header* header, unsigned long& file_size, const char* pattern)
+	void simple_patch_set_pattern(char* patch, unsigned long& file_size, const char* pattern)
 	{
+		assert(patch != nullptr);
+		assert(pattern != nullptr);
+
+		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
+
 		header->pattern_offset = file_size;
 		file_size += ALIGN(strlen(pattern), simple_patch_file_alignment_bits);
 		csstrnzcpy(patch + header->pattern_offset, pattern, file_size - header->pattern_offset);
 	}
 
-	void simple_patch_set_mask(char* patch, s_simple_patch_file_header* header, unsigned long& file_size, const char* mask)
+	void simple_patch_set_mask(char* patch, unsigned long& file_size, const char* mask)
 	{
+		assert(patch != nullptr);
+		assert(mask != nullptr);
+
+		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
+
 		header->mask_offset = file_size;
 		file_size += ALIGN(strlen(mask), simple_patch_file_alignment_bits);
 		csstrnzcpy(patch + header->mask_offset, "xxxxxxxxxxx", file_size - header->mask_offset);
 	}
 
-	void simple_patch_set_data(char* patch, s_simple_patch_file_header* header, unsigned long& file_size, unsigned char* data, unsigned long data_size)
+	void simple_patch_set_data(char* patch, unsigned long& file_size, unsigned char* data, unsigned long data_size)
 	{
+		assert(patch != nullptr);
+		assert(data != nullptr);
+
+		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
+
 		header->data_offset = file_size;
 		header->data_size = data_size;
 		file_size += ALIGN(header->data_size, simple_patch_file_alignment_bits);
@@ -89,21 +118,11 @@ namespace runtime_patch_manager
 		header->file_size = file_size;
 	}
 
-	// TODO: make a separate generic patch generator
-	void write_patch_file(const char* filename)
+	void simple_patch_write_file(char* file_data, unsigned long file_size, const char* filename)
 	{
-		char patch[sizeof(s_simple_patch_file_header) + 0x400]{};
-		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
-
-		unsigned long file_size = sizeof(*header);
-
-		unsigned char data[] = "_";
-		simple_patch_setup(header, 1, _simple_patch_file_type_memset);
-		simple_patch_set_name(header, "bink format string");
-		simple_patch_set_description(header, "skip the intro video files");
-		simple_patch_set_pattern(patch, header, file_size, "bink\\%s.bik");
-		simple_patch_set_mask(patch, header, file_size, "xxxxxxxxxxx");
-		simple_patch_set_data(patch, header, file_size, data, sizeof(data) - 1);
+		assert(file_data != nullptr);
+		assert(file_size > 0);
+		assert(filename != nullptr);
 
 		c_path filepath, dll_dir;
 		GetModuleFileNameA(GetModuleHandleA(DLL_NAME), dll_dir, sizeof(dll_dir));
@@ -115,11 +134,13 @@ namespace runtime_patch_manager
 		}
 		strcat_s(filepath, filename);
 
-		write_data_to_file(patch, file_size, filepath);
+		write_data_to_file(file_data, file_size, filepath);
 	}
 
 	void read_files_from_folder(const char* folder_name)
 	{
+		assert(folder_name != nullptr);
+
 		c_path find_str{};
 		sprintf_s(find_str, "%s\\*.patch", folder_name);
 
@@ -198,9 +219,6 @@ namespace runtime_patch_manager
 			}
 			}
 		}
-
-		
 	}
-
-};
+}
 

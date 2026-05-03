@@ -9,6 +9,7 @@ namespace console
 #if _DEBUG
 	bool console_created = []() -> bool
 	{
+		bool result = false;
 		if (AllocConsole())
 		{
 			freopen_s(&dummy_file, "CONOUT$", "w", stdout);
@@ -19,10 +20,10 @@ namespace console
 
 			on_console_create();
 
-			return true;
+			result = true;
 		}
 
-		return false;
+		return result;
 	}();
 #endif // _DEBUG
 }

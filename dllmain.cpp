@@ -100,8 +100,24 @@ HANDLE create_thread(DWORD(WINAPI* thread_func)(LPVOID), LPDWORD thread_id, LPVO
 void on_dll_process_attach()
 {
 	{
-		runtime_patch_manager::write_patch_file("skip_intros.patch");
-		runtime_patch_manager::read_files_from_folder("patches");
+		using namespace runtime_patch_manager;
+
+		// skip intros
+		{
+			char patch[sizeof(s_simple_patch_file_header) + 0x400]{};
+			unsigned long total_patch_size = sizeof(s_simple_patch_file_header);
+
+			unsigned char patch_data[] = "_";
+			simple_patch_setup(patch, sizeof(patch), 1, _simple_patch_file_type_memset);
+			simple_patch_set_name(patch, "bink format string");
+			simple_patch_set_description(patch, "skip the intro video files");
+			simple_patch_set_pattern(patch, total_patch_size, "bink\\%s.bik");
+			simple_patch_set_mask(patch, total_patch_size, "xxxxxxxxxxx");
+			simple_patch_set_data(patch, total_patch_size, patch_data, sizeof(patch_data) - 1);
+			simple_patch_write_file(patch, total_patch_size, "skip_intros.patch");
+		}
+
+		read_files_from_folder("patches");
 	}
 
 	static s_module_info module_info = {};
