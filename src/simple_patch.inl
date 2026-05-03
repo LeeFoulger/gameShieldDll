@@ -17,16 +17,16 @@ namespace runtime_patch_manager
 	{
 		unsigned long header_signature;
 
-		long file_size;
+		unsigned long file_size;
 		short file_version;
 		short file_type;
 		long : 32;
 
-		long pattern_offset;
-		long mask_offset;
+		unsigned long pattern_offset;
+		unsigned long mask_offset;
 
-		long data_offset;
-		long data_size;
+		unsigned long data_offset;
+		unsigned long data_size;
 
 		c_string<char, 32> name;
 		c_string<char, 48> description;
@@ -47,42 +47,63 @@ namespace runtime_patch_manager
 		patches[patch_count] = module_patch;
 	}
 
+	void simple_patch_setup(s_simple_patch_file_header* header, short file_version, short file_type)
+	{
+		header->header_signature = 'head';
+		header->file_version = file_version;
+		header->file_type = file_type;
+		header->module_offset = NONE;
+		header->footer_signature = 'foot';
+	}
+
+	void simple_patch_set_name(s_simple_patch_file_header* header, const char* name)
+	{
+		csstrnzcpy(header->name, name, sizeof(header->name));
+	}
+
+	void simple_patch_set_description(s_simple_patch_file_header* header, const char* description)
+	{
+		csstrnzcpy(header->description, description, sizeof(header->description));
+	}
+
+	void simple_patch_set_pattern(char* patch, s_simple_patch_file_header* header, unsigned long& file_size, const char* pattern)
+	{
+		header->pattern_offset = file_size;
+		file_size += ALIGN(strlen(pattern), simple_patch_file_alignment_bits);
+		csstrnzcpy(patch + header->pattern_offset, pattern, file_size - header->pattern_offset);
+	}
+
+	void simple_patch_set_mask(char* patch, s_simple_patch_file_header* header, unsigned long& file_size, const char* mask)
+	{
+		header->mask_offset = file_size;
+		file_size += ALIGN(strlen(mask), simple_patch_file_alignment_bits);
+		csstrnzcpy(patch + header->mask_offset, "xxxxxxxxxxx", file_size - header->mask_offset);
+	}
+
+	void simple_patch_set_data(char* patch, s_simple_patch_file_header* header, unsigned long& file_size, unsigned char* data, unsigned long data_size)
+	{
+		header->data_offset = file_size;
+		header->data_size = data_size;
+		file_size += ALIGN(header->data_size, simple_patch_file_alignment_bits);
+		memcpy(patch + header->data_offset, data, header->data_size);
+		header->file_size = file_size;
+	}
+
 	// TODO: make a separate generic patch generator
 	void write_patch_file(const char* filename)
 	{
 		char patch[sizeof(s_simple_patch_file_header) + 0x400]{};
 		s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
-		long file_size = sizeof(*header);
-
-		header->header_signature = 'head';
-
-		header->file_version = 1;
-		header->file_type = _simple_patch_file_type_memset;
-
-		header->module_offset = 0xFFFFFFFF;
-
-		csstrnzcpy(header->name, "bink format string", sizeof(header->name));
-		csstrnzcpy(header->description, "skip the intro video files", sizeof(header->description));
-
-		header->pattern_offset = file_size;
-		file_size += ALIGN(sizeof("bink\\%s.bik"), simple_patch_file_alignment_bits);
-		csstrnzcpy(patch + header->pattern_offset, "bink\\%s.bik", file_size - header->pattern_offset);
-
-		header->mask_offset = file_size;
-		file_size += ALIGN(sizeof("xxxxxxxxxxx"), simple_patch_file_alignment_bits);
-		csstrnzcpy(patch + header->mask_offset, "xxxxxxxxxxx", file_size - header->mask_offset);
-
-		header->data_offset = file_size;
+		unsigned long file_size = sizeof(*header);
 
 		unsigned char data[] = "_";
-
-		header->data_size = sizeof(data) - 1;
-		file_size += ALIGN(header->data_size, simple_patch_file_alignment_bits);
-		memcpy(patch + header->data_offset, &data, header->data_size);
-
-		header->file_size = file_size;
-		header->footer_signature = 'foot';
+		simple_patch_setup(header, 1, _simple_patch_file_type_memset);
+		simple_patch_set_name(header, "bink format string");
+		simple_patch_set_description(header, "skip the intro video files");
+		simple_patch_set_pattern(patch, header, file_size, "bink\\%s.bik");
+		simple_patch_set_mask(patch, header, file_size, "xxxxxxxxxxx");
+		simple_patch_set_data(patch, header, file_size, data, sizeof(data) - 1);
 
 		c_path filepath, dll_dir;
 		GetModuleFileNameA(GetModuleHandleA(DLL_NAME), dll_dir, sizeof(dll_dir));
