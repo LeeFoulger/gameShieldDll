@@ -10,7 +10,9 @@ namespace patches
 		void toggle_all()
 		{
 			if (bink_format_string_patch)
+			{
 				bink_format_string_patch->toggle();
+			}
 		}
 	}
 	*/
@@ -32,7 +34,9 @@ namespace patches
 				while (data0[0] != '\xCC')
 				{
 					if (data0[1] != '\x55')
+					{
 						data0--;
+					}
 
 					data0--;
 				}
@@ -49,7 +53,9 @@ namespace patches
 				{
 					result = find_pattern(start, end - start, "\xE8\x00\x00\x00\x00", "x????");
 					if (!result)
+					{
 						break;
+					}
 
 					calls.push(result - memory);
 					result += 5;
@@ -76,7 +82,9 @@ namespace patches
 					while (function_addr[0] != '\xCC')
 					{
 						if (function_addr[1] != '\x55')
+						{
 							function_addr--;
+						}
 
 						function_addr--;
 					}
@@ -95,7 +103,9 @@ namespace patches
 		void toggle_all()
 		{
 			if (contrail_render_patch)
+			{
 				contrail_render_patch->toggle();
+			}
 		}
 	}
 
@@ -108,7 +118,9 @@ namespace patches
 			c_vector<unsigned long> references = get_all_strings_startswith("pan-cam");
 
 			if (!references.size())
+			{
 				return 0;
+			}
 
 			unsigned long reference0 = references[0];
 			char* data0 = module_pointer<char>(NULL, reference0);
@@ -116,7 +128,9 @@ namespace patches
 
 			c_vector<unsigned long> references1 = find_all_references(data_addr0);
 			if (!references1.size())
+			{
 				return 0;
+			}
 
 			unsigned long reference1 = references1[0];
 			char* data1 = module_pointer<char>(NULL, reference1);
@@ -130,7 +144,9 @@ namespace patches
 				while (true)
 				{
 					if (function_start[0] == '\xCC' && function_start[1] == '\x55')
+					{
 						break;
+					}
 
 					function_start--;
 				}
@@ -139,7 +155,9 @@ namespace patches
 				while (true)
 				{
 					if (function_end[0] == '\xC3' && function_end[1] == '\xCC')
+					{
 						break;
+					}
 
 					function_end++;
 				}
@@ -151,7 +169,9 @@ namespace patches
 				{
 					result = find_pattern(start, end - start, "\xE8\x00\x00\x00\x00\x84\xC0\x0F\x84\x00\x00\x00\x00", "x????xxxx????");
 					if (!result)
+					{
 						break;
+					}
 
 					call_test_jz.push(module_address_to_offset(result));
 					result += sizeof("x????xxxx????");
@@ -159,13 +179,17 @@ namespace patches
 			}
 
 			if (!call_test_jz.size())
+			{
 				return 0;
+			}
 
 			char* data2 = data1;
 			while (data2[0] != '\x0F')
 			{
 				if (data2[1] != '\x84')
+				{
 					data2++;
+				}
 
 				data2++;
 			}
@@ -186,7 +210,9 @@ namespace patches
 		void toggle_all()
 		{
 			if (director_render_patch)
+			{
 				director_render_patch->toggle();
+			}
 		}
 	}
 
@@ -202,7 +228,9 @@ namespace patches
 			{
 				c_vector<unsigned long> references0 = get_all_wstrings_startswith(L"LADEN");
 				if (!references0.size())
+				{
 					return;
+				}
 
 				unsigned long reference0 = references0[0];
 				char* data0 = module_pointer<char>(NULL, reference0);
@@ -210,7 +238,9 @@ namespace patches
 
 				c_vector<unsigned long> references1 = find_all_references(data_addr0);
 				if (!references1.size())
+				{
 					return;
+				}
 
 				unsigned long reference1 = references1[0];
 				char* data1 = module_pointer<char>(NULL, reference1);
@@ -240,9 +270,13 @@ namespace patches
 			if (patch_offsets.size() == 2)
 			{
 				if (out_patch0_offset)
+				{
 					*out_patch0_offset = patch_offsets[0];
+				}
 				if (out_patch1_offset)
+				{
 					*out_patch1_offset = patch_offsets[1];
+				}
 			}
 		}
 
@@ -272,9 +306,13 @@ namespace patches
 		void toggle_all()
 		{
 			if (language_patch0)
+			{
 				language_patch0->toggle();
+			}
 			if (language_patch1)
+			{
 				language_patch1->toggle();
+			}
 		}
 	}
 
@@ -296,7 +334,9 @@ namespace patches
 
 				c_vector<unsigned long> references1 = find_all_references(data_addr0);
 				if (!references1.size())
+				{
 					return 0;
+				}
 
 				unsigned long reference1 = references1[0];
 				char* data1 = module_pointer<char>(NULL, reference1);
@@ -305,7 +345,9 @@ namespace patches
 				while (data1[0] != '\xCC')
 				{
 					if (data1[1] != '\x55')
+					{
 						data1--;
+					}
 
 					data1--;
 				}
@@ -323,7 +365,9 @@ namespace patches
 		void toggle_all()
 		{
 			if (game_engine_render_watermarks_patch)
+			{
 				game_engine_render_watermarks_patch->toggle();
+			}
 		}
 	}
 }
@@ -331,9 +375,13 @@ namespace patches
 void game_set_language(c_enum<e_language, unsigned char> selected_language = k_default_language)
 {
 	if (patches::language::language_patch0)
+	{
 		vmemset(patches::language::language_patch0->address, selected_language, sizeof(selected_language));
+	}
 	if (patches::language::language_patch1)
+	{
 		vmemset(patches::language::language_patch1->address, selected_language, sizeof(selected_language));
+	}
 }
 
 void backend_session_bypass()
@@ -346,43 +394,48 @@ void backend_session_bypass()
 	unsigned long backend_session_offline_size = static_cast<unsigned long>(strlen(backend_session_offline_find));
 	unsigned long backend_session_online_size  = static_cast<unsigned long>(strlen(backend_session_online_find));
 
-	if (backend_session_offline_size != backend_session_online_size)
-		return;
-
-	while (halo_game::virtual_files_buffer)
+	if (backend_session_offline_size == backend_session_online_size)
 	{
-		if (*halo_game::virtual_files_buffer)
+		while (halo_game::virtual_files_buffer)
 		{
-			for (long i = 0; i < 512; i++)
+			if (*halo_game::virtual_files_buffer)
 			{
-				s_vfile_info& vfile = halo_game::virtual_files[i];
-				if (*vfile.name && *vfile.folder && vfile.size)
+				for (long i = 0; i < 512; i++)
 				{
-					char* vfile_buffer = halo_game::virtual_files_buffer + vfile.offset;
+					s_vfile_info& vfile = halo_game::virtual_files[i];
+					if (*vfile.name && *vfile.folder && vfile.size)
+					{
+						char* vfile_buffer = halo_game::virtual_files_buffer + vfile.offset;
 
-					if (strcmp(vfile.name, "ui_globals.ssl") != 0)
-						continue;
+						if (strcmp(vfile.name, "ui_globals.ssl") != 0)
+						{
+							continue;
+						}
 
-					char* backend_session_offline = strstr(vfile_buffer, backend_session_offline_find);
-					char* backend_session_online = strstr(vfile_buffer, backend_session_online_find);
+						char* backend_session_offline = strstr(vfile_buffer, backend_session_offline_find);
+						char* backend_session_online = strstr(vfile_buffer, backend_session_online_find);
 
-					if (!backend_session_offline || !backend_session_online)
-						return;
+						if (!backend_session_offline || !backend_session_online)
+						{
+							return;
+						}
 
-					char backend_session_offline_value = backend_session_offline[(backend_session_offline_size - 1)];
-					char backend_session_online_value = backend_session_online[(backend_session_online_size - 1)];
+						char backend_session_offline_value = backend_session_offline[(backend_session_offline_size - 1)];
+						char backend_session_online_value = backend_session_online[(backend_session_online_size - 1)];
 
-					unsigned long backend_session_offline_value_offset = (backend_session_offline + (backend_session_offline_size - 1)) - module_memory(NULL);
-					unsigned long backend_session_online_value_offset = (backend_session_online + (backend_session_online_size - 1)) - module_memory(NULL);
+						unsigned long backend_session_offline_value_offset = (backend_session_offline + (backend_session_offline_size - 1)) - module_memory(NULL);
+						unsigned long backend_session_online_value_offset = (backend_session_online + (backend_session_online_size - 1)) - module_memory(NULL);
 
-					patches::backend_session::patch_offline_value = patch_memset(NULL, backend_session_offline_value_offset, backend_session_online_value, sizeof(backend_session_online_value));
-					patches::backend_session::patch_online_value = patch_memset(NULL, backend_session_online_value_offset, backend_session_offline_value, sizeof(backend_session_offline_value));
+						patches::backend_session::patch_offline_value = patch_memset(NULL, backend_session_offline_value_offset, backend_session_online_value, sizeof(backend_session_online_value));
+						patches::backend_session::patch_online_value = patch_memset(NULL, backend_session_online_value_offset, backend_session_offline_value, sizeof(backend_session_offline_value));
+					}
 				}
+
+				break;
 			}
 
-			break;
+			Sleep(200);
 		}
-
-		Sleep(200);
 	}
 }
+

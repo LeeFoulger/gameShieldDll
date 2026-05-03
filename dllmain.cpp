@@ -102,8 +102,6 @@ void on_dll_process_attach()
 	{
 		runtime_patch_manager::write_patch_file("skip_intros.patch");
 		runtime_patch_manager::read_files_from_folder("patches");
-
-		console_print("");
 	}
 
 	static s_module_info module_info = {};
@@ -128,3 +126,8 @@ void on_dll_process_attach()
 	unsigned long thread_id;
 	create_thread(main_loop, &thread_id);
 }
+
+void console::on_console_create()
+{
+}
+

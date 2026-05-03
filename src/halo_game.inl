@@ -279,7 +279,9 @@ namespace halo_game
 			while (!found_end)
 			{
 				if ((end[0] == '\xC2' && end[3] == '\xCC') || (end[0] == '\xC3' && end[1] == '\xCC'))
+				{
 					found_end = true;
+				}
 				end++;
 			}
 
@@ -289,11 +291,15 @@ namespace halo_game
 			for (char* pos = start; start < end; start = pos++)
 			{
 				if (*pos == '\xE8')
+				{
 					calls.push(pos - memory);
+				}
 			}
 
 			if (!calls.size() || calls.size() < 2)
+			{
 				break;
+			}
 
 			if (call_to_function_offset(calls[calls.size() - 1]) == call_to_function_offset(calls[calls.size() - 2]))
 			{
@@ -305,9 +311,13 @@ namespace halo_game
 		}
 
 		if (out_vfiles_buffer_offset)
+		{
 			*out_vfiles_buffer_offset = vfiles_buffer_offset;
+		}
 		if (out_vfiles_offset)
+		{
 			*out_vfiles_offset = vfiles_offset;
+		}
 	}
 
 	unsigned long get_virtual_files_buffer_module_offset()
@@ -356,7 +366,9 @@ namespace halo_game
 		{
 			c_vector<unsigned long> references0 = get_all_strings_startswith("levels\\solo\\s3d_tutorial\\s3d_tutorial");
 			if (!references0.size())
+			{
 				return;
+			}
 
 			unsigned long reference0 = references0[0];
 			char* data0 = module_pointer<char>(NULL, reference0);
@@ -364,7 +376,9 @@ namespace halo_game
 
 			c_vector<unsigned long> references1 = find_all_references(data_addr0);
 			if (!references1.size())
+			{
 				return;
+			}
 
 			unsigned long reference1 = references1[0];
 			char* data1 = module_pointer<char>(NULL, reference1);
@@ -376,7 +390,9 @@ namespace halo_game
 			while (true)
 			{
 				if (function_start[0] == '\xCC' && function_start[1] == '\x55')
+				{
 					break;
+				}
 
 				function_start--;
 			}
@@ -385,7 +401,9 @@ namespace halo_game
 			while (true)
 			{
 				if (function_end[0] == '\xC3' && function_end[1] == '\xCC')
+				{
 					break;
+				}
 
 				function_end++;
 			}
@@ -433,7 +451,6 @@ namespace halo_game
 				main_game_pending_game_options = module_pointer<s_game_options>(NULL, push_to_data_offset(call_to_function_offset(calls[7]) + 0xD));
 				return;
 			}
-			console_print("");
 		}
 
 		char tutorial_scenario_path[] = "levels\\solo\\s3d_tutorial\\s3d_tutorial";
@@ -469,7 +486,9 @@ char* get_command_line()
 {
 	char* command_line = nullptr;
 	if (halo_game::command_line)
+	{
 		command_line = *halo_game::command_line;
+	}
 
 	return command_line;
 }
@@ -491,9 +510,13 @@ namespace patches
 		void toggle_all()
 		{
 			if (patches::backend_session::patch_offline_value)
+			{
 				patches::backend_session::patch_offline_value->toggle();
+			}
 			if (patches::backend_session::patch_online_value)
+			{
 				patches::backend_session::patch_online_value->toggle();
+			}
 		}
 	}
 }
@@ -528,6 +551,7 @@ void dump_virtual_files()
 
 	patches::backend_session::toggle_all();
 }
+
 void game_load_map(const char* scenario_path, c_enum<e_game_mode, unsigned long> game_mode, c_enum<e_game_engine_variant, unsigned long> game_engine_variant = _game_engine_base_variant)
 {
 	static char* data = new char[1 << 20]{};
@@ -545,7 +569,9 @@ void game_load_map(const char* scenario_path, c_enum<e_game_mode, unsigned long>
 	{
 		// if 'game_engine_variant' is set to `_game_engine_base_variant` the game will crash
 		if (game_engine_variant == _game_engine_base_variant)
+		{
 			game_engine_variant = _game_engine_slayer_variant;
+		}
 
 		game_variant.game_engine_variant = game_engine_variant;
 
@@ -565,7 +591,9 @@ void game_load_map(const char* scenario_path, c_enum<e_game_mode, unsigned long>
 
 	s_map_variant& map_variant = options.get_map_variant();
 	if (!halo_game::gui_game_setup_storage_map_variant_valid(map_variant))
+	{
 		halo_game::map_variant_create_default(map_variant, map_variant.get_map_id());
+	}
 
 	halo_game::main_game_change(options);
 }
@@ -573,7 +601,9 @@ void game_load_map(const char* scenario_path, c_enum<e_game_mode, unsigned long>
 void game_reload_map(void* userdata = nullptr)
 {
 	if (halo_game::main_game_pending_game_options)
+	{
 		halo_game::main_game_change(*halo_game::main_game_pending_game_options);
+	}
 }
 
 void game_load_map_dialog(void* userdata = nullptr)
@@ -595,7 +625,9 @@ void game_load_map_dialog(void* userdata = nullptr)
 
 		cache_file_type = cache_file_header->get_cache_file_type();
 		if (strcmp(cache_file_header->get_scenario_name(), "mainmenu") == 0)
+		{
 			cache_file_type = _cache_file_type_ui;
+		}
 
 		delete cache_file_header;
 	}
@@ -605,3 +637,4 @@ void game_load_map_dialog(void* userdata = nullptr)
 
 	game_load_map(scenario_path, game_mode, game_engine_variant);
 }
+

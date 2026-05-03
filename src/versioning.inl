@@ -172,3 +172,4 @@ unsigned long tls_get_game_globals_offset()
 
 	return 0xFFFFFFFF;
 }
+

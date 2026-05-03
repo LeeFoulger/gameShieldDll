@@ -11,16 +11,16 @@ c_config::c_config(const char* filename, bool fullpath)
 template<typename t_type>
 void c_config::read_as_format(t_type* out_value, const char* format, const char* section, const char* key)
 {
-	if (!out_value)
-		return;
+	if (out_value == nullptr)
+	{
+		c_string<char, 4096> str;
+		decltype(str) default_str;
 
-	c_string<char, 4096> str;
-	decltype(str) default_str;
+		sprintf_s(default_str, format, *out_value);
+		GetPrivateProfileStringA(section, key, default_str, str, sizeof(str), m_filename);
 
-	sprintf_s(default_str, format, *out_value);
-	GetPrivateProfileStringA(section, key, default_str, str, sizeof(str), m_filename);
-
-	sscanf_s(str, format, out_value);
+		sscanf_s(str, format, out_value);
+	}
 }
 
 template<typename t_type>
@@ -84,3 +84,4 @@ void c_config::write_ulong64(unsigned long long value, const char* section, cons
 {
 	write_as_format(value, as_hex ? "0x%llX" : "%llu", section, key);
 }
+

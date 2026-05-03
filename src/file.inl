@@ -80,9 +80,11 @@ void find_files(const char* find_str, c_vector<char*>* files, bool absolute_path
 		c_path filepath;
 		do
 		{
-			if (!strcmp(find_file_data.cFileName, "..") || !strcmp(find_file_data.cFileName, ".") ||
+			if (strcmp(find_file_data.cFileName, "..") == 0 || strcmp(find_file_data.cFileName, ".") == 0 ||
 				find_file_data.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM || find_file_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			{
 				continue;
+			}
 
 			sprintf_s(filepath, MAX_PATH - 1, "%s\\%s", find_path, find_file_data.cFileName);
 			//printf_s("%s\n", filepath);
@@ -111,9 +113,11 @@ void find_files(const wchar_t* find_str, c_vector<wchar_t*>* files, bool absolut
 		c_path_wide filepath;
 		do
 		{
-			if (!wcscmp(find_file_data.cFileName, L"..") || !wcscmp(find_file_data.cFileName, L".") ||
+			if (wcscmp(find_file_data.cFileName, L"..") == 0 || wcscmp(find_file_data.cFileName, L".") == 0 ||
 				find_file_data.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM || find_file_data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			{
 				continue;
+			}
 
 			swprintf_s(filepath, MAX_PATH - 1, L"%s\\%s", dll_dir, find_file_data.cFileName);
 			//wprintf_s(L"%s\n", filepath);
@@ -127,3 +131,4 @@ void find_files(const wchar_t* find_str, c_vector<wchar_t*>* files, bool absolut
 
 	FindClose(find_handle);
 }
+

@@ -109,24 +109,34 @@ namespace runtime_patch_manager
 
 			read_data_from_file(&patch, &patch_size, filepath);
 			if (!patch)
+			{
 				continue;
+			}
 
 			s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 			if (patch_size != header->file_size)
+			{
 				continue;
+			}
 
 			if (header->header_signature != 'head' || header->footer_signature != 'foot')
+			{
 				continue;
+			}
 
 			if (header->file_version != 1)
+			{
 				continue;
+			}
 
 			if (*header->name)
 			{
 				console_print("[Runtime Patch Manager] %s", header->name);
 
 				if (*header->description)
+				{
 					console_print("(%s)", header->description);
+				}
 
 				console_print("\n");
 			}
@@ -138,8 +148,10 @@ namespace runtime_patch_manager
 			long data_size = header->data_size;
 
 			unsigned long module_offset = header->module_offset;
-			if (module_offset == 0xFFFFFFFF)
+			if (module_offset == NONE)
+			{
 				module_offset = module_offset_from_pattern(NULL, pattern, mask);
+			}
 
 			switch (header->file_type)
 			{
@@ -161,7 +173,7 @@ namespace runtime_patch_manager
 			}
 		}
 
-		console_print("");
+		
 	}
 
 };

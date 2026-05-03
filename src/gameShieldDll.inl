@@ -49,3 +49,4 @@ DLL_EXPORT void __cdecl frostSetCharNameW(const wchar_t* charName)
 {
 	frost::on_frostSetCharNameW(charName);
 }
+

@@ -25,3 +25,4 @@ c_enum<e_game_engine_variant, unsigned long> cache_file_type_to_game_engine_vari
 
 	return _game_engine_base_variant;
 }
+

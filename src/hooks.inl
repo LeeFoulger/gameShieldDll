@@ -23,13 +23,16 @@ void __fastcall game_update(int a1, float* a2)
 	void(__fastcall* func)(int, float*) = reinterpret_cast<decltype(func)>(game_update_address);
 
 	if (on_game_update_begin)
+	{
 		on_game_update_begin();
+	}
 
 	func(a1, a2);
 
 	if (on_game_update_end)
+	{
 		on_game_update_end();
-	console_print("");
+	}
 }
 
 #define SSL_BINDER_HOOK(module_name, call_func, print_call, func_name, ...) \
@@ -53,10 +56,10 @@ long __cdecl func_name(long a1, long a2, long a3, long a4, volatile long** a5) \
 struct s_command
 {
 	c_string<wchar_t, 32> name;
-	void(*callback)(const wchar_t*, const wchar_t*);
+	void(*callback)(const wchar_t* command, const wchar_t* message);
 };
 
-s_command commands[]
+const s_command k_console_commands[]
 {
 	{
 		L"exit",
@@ -152,10 +155,12 @@ void SSL_HQ_Chat_handler(const wchar_t* message = L"")
 	{
 		console_print(L"%s\n", message);
 
-		for (s_command& command : commands)
+		for (const s_command& command : k_console_commands)
 		{
 			if (wcscmp(message, command.name) == 0 || wcsstr(message, command.name) == message)
+			{
 				command.callback(command.name, message);
+			}
 		}
 	}
 }
@@ -167,7 +172,6 @@ void sslBinder_handler(const char* function_name, long a1, long a2, long a3, lon
 		s_wstring* wstr = *reinterpret_cast<s_wstring**>(a3);
 		SSL_HQ_Chat_handler(wstr->str);
 	}
-	//__debugbreak();
 }
 
 // this function is extremely fucking slow
@@ -193,7 +197,9 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 
 	c_vector<unsigned long> references0 = get_all_strings_startswith(ssl_function_name);
 	if (!references0.size())
+	{
 		return 0;
+	}
 
 	console_print("%s\n", ssl_function_name);
 
@@ -202,7 +208,9 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 
 	c_vector<unsigned long> references1 = find_all_references(data0);
 	if (!references1.size())
+	{
 		return 0;
+	}
 
 	unsigned long reference1 = references1[0];
 	char* data1 = module_pointer<char>(NULL, reference1);
@@ -237,14 +245,18 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 		{
 			result = find_pattern(start, end - start, "\xBA\x00\x00\x00\x00\x8D", "x????x");
 			if (!result)
+			{
 				break;
+			}
 
 			moves.push(module_address_to_offset(result));
 		}
 	}
 
 	if (!moves.size())
+	{
 		return 0;
+	}
 
 	for (unsigned long move_index = 0; move_index < moves.size(); move_index++)
 	{
@@ -270,14 +282,18 @@ unsigned long get_ssl_binder_function_module_offset(const char* ssl_function_nam
 		{
 			result = find_pattern(start, end - start, "\xFF\x15\x00\x00\x00\x00", "xx????");
 			if (!result)
+			{
 				break;
+			}
 
 			calls.push(module_address_to_offset(result));
 			result += 5;
 		}
 
 		if (!calls.size())
+		{
 			return 0;
+		}
 
 		unsigned long result = module_address_to_offset(module_reference<unsigned long>(NULL, calls[0] + 2));
 
@@ -942,3 +958,4 @@ namespace SSL_USER_SERVICE
 		SSL_BINDER_UNHOOK(SetCharacterColor);
 	}
 }
+

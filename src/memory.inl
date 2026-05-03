@@ -4,14 +4,18 @@
 char* find_pattern(char* start, unsigned long size, const char* pattern, const char* mask)
 {
 	unsigned long i, j;
-	unsigned long len;
+	unsigned long len = 0;
 	unsigned char fnd = 0;
 
-	if (!size || !pattern || !mask)
+	if (size == 0 || pattern == nullptr || mask == nullptr)
+	{
 		return 0;
+	}
 
 	if (!(len = strlen(mask)) || len > size)
+	{
 		return 0;
+	}
 
 	for (i = 0; !fnd && i <= size - len; i++)
 	{
@@ -85,7 +89,9 @@ void module_get_section_by_name(const wchar_t* module_name, const char* section_
 	while (section_count)
 	{
 		if (strcmp((char*)section->Name, section_name) == 0)
+		{
 			break;
+		}
 
 		section_count--;
 	}
@@ -103,7 +109,9 @@ char* module_memory(const wchar_t* module_name, unsigned long* memory_size = nul
 		module_get_nt_header(module_name, &nt_header);
 
 		if (nt_header)
+		{
 			*memory_size = nt_header->OptionalHeader.SizeOfImage;
+		}
 	}
 
 	return memory;
@@ -112,11 +120,15 @@ char* module_memory(const wchar_t* module_name, unsigned long* memory_size = nul
 template<typename t_type>
 t_type* module_pointer(const wchar_t* module_name, unsigned long offset)
 {
+	t_type* result = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
 	if (offset == 0 || module_address - offset == 0)
-		return nullptr;
+	{
+		result = reinterpret_cast<t_type*>(module_address);
+	}
 
-	return reinterpret_cast<t_type*>(module_address);
+	return result;
 }
 
 template<typename t_type>
@@ -127,29 +139,41 @@ t_type& module_reference(const wchar_t* module_name, unsigned long offset)
 
 void* module_memcpy(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size)
 {
+	void* result = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
 	if (module_address - offset == 0)
-		return nullptr;
+	{
+		result = ::vmemcpy(module_address, src, size);
+	}
 
-	return ::vmemcpy(module_address, src, size);
+	return result;
 }
 
 void* module_memmove(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size)
 {
+	void* result = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
 	if (module_address - offset == 0)
-		return nullptr;
+	{
+		result = ::vmemmove(module_address, src, size);
+	}
 
-	return ::vmemmove(module_address, src, size);
+	return result;
 }
 
 void* module_memset(const wchar_t* module_name, unsigned long offset, long val, unsigned long size)
 {
+	void* result = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
 	if (module_address - offset == 0)
-		return nullptr;
+	{
+		result = ::vmemset(module_address, val, size);
+	}
 
-	return ::vmemset(module_address, val, size);
+	return result;
 }
 
 unsigned long module_offset_from_pattern(const wchar_t* module_name, const char* pattern, const char* mask, unsigned long start_offset = 0, unsigned long max_size = 0)
@@ -158,7 +182,9 @@ unsigned long module_offset_from_pattern(const wchar_t* module_name, const char*
 	char* memory = module_memory(module_name, &memory_size);
 
 	if (max_size)
+	{
 		memory_size = max_size;
+	}
 
 	char* result = find_pattern(memory + start_offset, memory_size, pattern, mask);
 
@@ -188,31 +214,39 @@ struct s_module_patch
 	void toggle()
 	{
 		if (enabled)
+		{
 			revert();
+		}
 		else
+		{
 			enable();
+		}
 	}
 };
 
 s_module_patch* patch_memset(const wchar_t* module_name, unsigned long offset, long val, unsigned long size, bool enabled = true)
 {
+	s_module_patch* module_patch = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
-	if (module_address == module_memory(module_name) || module_address - offset == 0)
-		return nullptr;
+	if (module_address != module_memory(module_name) && module_address - offset != 0)
+	{
+		module_patch = new s_module_patch();
+		module_patch->address = module_address;
+		module_patch->data_size = size;
 
-	s_module_patch* module_patch = new s_module_patch();
-	module_patch->address = module_address;
-	module_patch->data_size = size;
+		module_patch->old_data = new char[module_patch->data_size] {};
+		::memcpy(module_patch->old_data, module_patch->address, module_patch->data_size);
 
-	module_patch->old_data = new char[module_patch->data_size]{};
-	::memcpy(module_patch->old_data, module_patch->address, module_patch->data_size);
+		module_patch->new_data = new char[module_patch->data_size] {};
+		::memset(module_patch->new_data, val, size);
 
-	module_patch->new_data = new char[module_patch->data_size]{};
-	::memset(module_patch->new_data, val, size);
-
-	module_patch->enabled = enabled;
-	if (module_patch->enabled)
-		module_patch->enable();
+		module_patch->enabled = enabled;
+		if (module_patch->enabled)
+		{
+			module_patch->enable();
+		}
+	}
 
 	return module_patch;
 }
@@ -223,40 +257,46 @@ unsigned long call_to_function_offset(unsigned long call_offset);
 
 char* patch_call(const wchar_t* module_name, unsigned long offset, const void* src, bool enabled = true)
 {
+	char* function_address = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
-	if (module_address == module_memory(module_name) || module_address - offset == 0)
-		return nullptr;
+	if (module_address != module_memory(module_name) && module_address - offset != 0)
+	{
+		function_address = module_memory(module_name) + call_to_function_offset(offset);
 
-	char* function_address = module_memory(module_name) + call_to_function_offset(offset);
+		unsigned char temp_jump[5] = { 0xE8, 0x90, 0x90, 0x90, 0x90 };
+		unsigned long jump_size = ((unsigned long)src - (unsigned long)module_address - 5);
 
-	unsigned char temp_jump[5] = { 0xE8, 0x90, 0x90, 0x90, 0x90 };
-	unsigned long jump_size = ((unsigned long)src - (unsigned long)module_address - 5);
-
-	vmemcpy(&temp_jump[1], &jump_size, 4);
-	vmemcpy(module_address, temp_jump, 5);
+		vmemcpy(&temp_jump[1], &jump_size, 4);
+		vmemcpy(module_address, temp_jump, 5);
+	}
 
 	return function_address;
 }
 
 s_module_patch* patch_memcpy(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size, bool enabled = true)
 {
+	s_module_patch* module_patch = nullptr;
+
 	char* module_address = module_memory(module_name) + offset;
-	if (module_address == module_memory(module_name) || module_address - offset == 0)
-		return nullptr;
+	if (module_address != module_memory(module_name) && module_address - offset != 0)
+	{
+		module_patch = new s_module_patch();
+		module_patch->address = module_address;
+		module_patch->data_size = size;
 
-	s_module_patch* module_patch = new s_module_patch();
-	module_patch->address = module_address;
-	module_patch->data_size = size;
+		module_patch->old_data = new char[module_patch->data_size] {};
+		::memcpy(module_patch->old_data, module_patch->address, module_patch->data_size);
 
-	module_patch->old_data = new char[module_patch->data_size]{};
-	::memcpy(module_patch->old_data, module_patch->address, module_patch->data_size);
+		module_patch->new_data = new char[module_patch->data_size] {};
+		::memcpy(module_patch->new_data, src, size);
 
-	module_patch->new_data = new char[module_patch->data_size]{};
-	::memcpy(module_patch->new_data, src, size);
-
-	module_patch->enabled = enabled;
-	if (module_patch->enabled)
-		module_patch->enable();
+		module_patch->enabled = enabled;
+		if (module_patch->enabled)
+		{
+			module_patch->enable();
+		}
+	}
 
 	return module_patch;
 }
@@ -364,15 +404,19 @@ c_vector<unsigned long> find_all_references(const t_type to_find, c_vector<unsig
 	for (char* result = nullptr; start < end; start = result)
 	{
 		result = find_pattern(start, end - start, pattern, mask);
-		if (!result)
+		if (result == nullptr)
+		{
 			break;
+		}
 
 		references.push(result - memory);
 		result += sizeof(unsigned long);
 	}
 
 	if (out_references)
+	{
 		*out_references = references;
+	}
 	return references;
 }
 
@@ -397,14 +441,18 @@ c_vector<unsigned long> find_all_references_with_length(const char* to_find, uns
 	{
 		result = find_pattern(start, end - start, pattern, mask);
 		if (!result)
+		{
 			break;
+		}
 
 		references.push(result - memory);
 		result += (pattern_len + char_size);
 	}
 
 	if (out_references)
+	{
 		*out_references = references;
+	}
 	return references;
 }
 
@@ -429,14 +477,18 @@ c_vector<unsigned long> get_all_strings_startswith(const char* to_find, c_vector
 	{
 		result = find_pattern(start, end - start, pattern, mask);
 		if (!result)
+		{
 			break;
+		}
 
 		references.push(result - memory);
 		result += (pattern_len + char_size);
 	}
 
 	if (out_references)
+	{
 		*out_references = references;
+	}
 	return references;
 }
 
@@ -461,14 +513,18 @@ c_vector<unsigned long> get_all_wstrings_startswith(const wchar_t* to_find, c_ve
 	{
 		result = find_pattern(start, end - start, pattern, mask);
 		if (!result)
+		{
 			break;
+		}
 
 		references.push(result - memory);
 		result += (pattern_len + char_size);
 	}
 
 	if (out_references)
+	{
 		*out_references = references;
+	}
 	return references;
 }
 
@@ -491,7 +547,7 @@ namespace rtti
 					console_print("0x%08lX, %s\n", BASE_ADDRESS_32BIT + references[reference_index], address);
 				}
 
-				console_print("");
+				
 			}
 		}
 	}
@@ -525,8 +581,6 @@ namespace rtti
 					console_print("error %x\n", GetLastError());
 				}
 				delete[] str;
-
-				console_print("");
 			}
 		}
 	}
@@ -539,3 +593,4 @@ char*& tls_get(unsigned long offset = 0)
 
 	return *reinterpret_cast<char**>(*tls_ptr + offset);
 }
+

@@ -26,3 +26,4 @@ namespace console
 	}();
 #endif // _DEBUG
 }
+

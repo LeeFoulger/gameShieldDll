@@ -230,3 +230,4 @@ define_enum_strings(camera_mode)
 	"scripted",
 	"authored"
 };
+

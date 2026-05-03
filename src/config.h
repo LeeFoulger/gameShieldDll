@@ -28,5 +28,5 @@ private:
 
 	template<typename t_type>
 	void write_as_format(t_type value, const char* format, const char* section, const char* key);
-
 };
+
