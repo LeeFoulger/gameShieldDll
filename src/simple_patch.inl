@@ -87,7 +87,12 @@ namespace runtime_patch_manager
 		c_path filepath, dll_dir;
 		GetModuleFileNameA(GetModuleHandleA(DLL_NAME), dll_dir, sizeof(dll_dir));
 		PathRemoveFileSpecA(dll_dir);
-		sprintf_s(filepath, "%s\\patches\\%s", dll_dir, filename);
+		sprintf_s(filepath, "%s\\patches\\", dll_dir);
+		if (PathFileExistsA(filepath) == FALSE)
+		{
+			CreateDirectoryA(filepath, NULL);
+		}
+		strcat_s(filepath, filename);
 
 		write_data_to_file(patch, file_size, filepath);
 	}
