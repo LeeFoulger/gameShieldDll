@@ -15,4 +15,7 @@
 - F1: Reload Map
 - F2: Load Map Dialog (file explorer for map selection)
 
-## [Download latest binary here!](https://github.com/theTwist84/gameShieldDll/releases/)
+### bugs
+- Commands: invalid commands crash the game
+
+## [Download latest binary here!](https://github.com/twist84/gameShieldDll_/releases/)
