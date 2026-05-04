@@ -31,7 +31,7 @@ bool write_structure_to_file(t_type& structure, const char* filename)
 	return false;
 }
 
-bool read_data_from_file(char** out_data, long* out_size, const char* filename)
+bool read_data_from_file(char** out_data, unsigned long* out_size, const char* filename)
 {
 	FILE* file = nullptr;
 	if (fopen_s(&file, filename, "rb"), file != nullptr)
@@ -64,7 +64,7 @@ bool write_data_to_file(char* data, unsigned long size, const char* filename)
 	return false;
 }
 
-void find_files(const char* find_str, c_vector<char*>* files, bool absolute_path = true)
+void find_files(const char* find_str, c_vector<char*>& filenames, bool absolute_path = true)
 {
 	c_path find_path, dll_dir;
 	GetModuleFileNameA(GetModuleHandleA(DLL_NAME), dll_dir, _countof(dll_dir));
@@ -91,7 +91,7 @@ void find_files(const char* find_str, c_vector<char*>* files, bool absolute_path
 
 			char* tmp = new char[MAX_PATH];
 			csstrnzcpy(tmp, absolute_path ? filepath : find_file_data.cFileName, MAX_PATH);
-			(*files).push(tmp);
+			filenames.push(tmp);
 
 		} while (FindNextFileA(find_handle, &find_file_data) != 0);
 	}

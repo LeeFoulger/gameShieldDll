@@ -5,7 +5,7 @@ namespace patches
 	/*
 	namespace bink
 	{
-		s_module_patch* bink_format_string_patch = patch_memset(NULL, module_offset_from_pattern(NULL, "bink\\%s.bik", "xxxxxxxxxxx"), '_', sizeof('_'));
+		s_module_patch* bink_format_string_patch = module_patch_create_memset(NULL, module_offset_from_pattern(NULL, "bink\\%s.bik", "xxxxxxxxxxx"), '_', sizeof('_'));
 
 		void toggle_all()
 		{
@@ -98,7 +98,7 @@ namespace patches
 		}
 
 		// contrail_render: return
-		s_module_patch* contrail_render_patch = patch_memset(NULL, get_contrail_render_patch_module_offset(), 0xC3, 1);
+		s_module_patch* contrail_render_patch = module_patch_create_memset(NULL, get_contrail_render_patch_module_offset(), 0xC3, 1);
 
 		void toggle_all()
 		{
@@ -205,7 +205,7 @@ namespace patches
 		}
 
 		// director_render: if (player_control_get_machinima_camera_debug()) return;
-		s_module_patch* director_render_patch = patch_memset(NULL, get_director_render_patch_module_offset(), 0x90, 6, false);
+		s_module_patch* director_render_patch = module_patch_create_memset(NULL, get_director_render_patch_module_offset(), 0x90, 6, false);
 
 		void toggle_all()
 		{
@@ -300,8 +300,8 @@ namespace patches
 			return result;
 		}
 
-		s_module_patch* language_patch0 = patch_memset(NULL, get_language_patch0_module_offset(), k_default_language, 1ul);
-		s_module_patch* language_patch1 = patch_memset(NULL, get_language_patch1_module_offset(), k_default_language, 1ul);
+		s_module_patch* language_patch0 = module_patch_create_memset(NULL, get_language_patch0_module_offset(), k_default_language, 1ul);
+		s_module_patch* language_patch1 = module_patch_create_memset(NULL, get_language_patch1_module_offset(), k_default_language, 1ul);
 
 		void toggle_all()
 		{
@@ -360,7 +360,7 @@ namespace patches
 		}
 
 		// game_engine_render_watermarks: return;
-		s_module_patch* game_engine_render_watermarks_patch = patch_memset(NULL, get_game_engine_render_watermarks_patch_module_offset(), 0xC3, 1, false);
+		s_module_patch* game_engine_render_watermarks_patch = module_patch_create_memset(NULL, get_game_engine_render_watermarks_patch_module_offset(), 0xC3, 1, false);
 
 		void toggle_all()
 		{
@@ -426,8 +426,8 @@ void backend_session_bypass()
 						unsigned long backend_session_offline_value_offset = (backend_session_offline + (backend_session_offline_size - 1)) - module_memory(NULL);
 						unsigned long backend_session_online_value_offset = (backend_session_online + (backend_session_online_size - 1)) - module_memory(NULL);
 
-						patches::backend_session::patch_offline_value = patch_memset(NULL, backend_session_offline_value_offset, backend_session_online_value, sizeof(backend_session_online_value));
-						patches::backend_session::patch_online_value = patch_memset(NULL, backend_session_online_value_offset, backend_session_offline_value, sizeof(backend_session_offline_value));
+						patches::backend_session::patch_offline_value = module_patch_create_memset(NULL, backend_session_offline_value_offset, backend_session_online_value, sizeof(backend_session_online_value));
+						patches::backend_session::patch_online_value = module_patch_create_memset(NULL, backend_session_online_value_offset, backend_session_offline_value, sizeof(backend_session_offline_value));
 					}
 				}
 

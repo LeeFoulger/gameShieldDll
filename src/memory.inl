@@ -193,24 +193,18 @@ unsigned long module_offset_from_pattern(const wchar_t* module_name, const char*
 
 struct s_module_patch
 {
-	void* address;
-
-	void* old_data;
-	void* new_data;
-	unsigned long data_size;
-
-	bool enabled;
-
 	void* revert()
 	{
 		enabled = false;
 		return ::vmemcpy(address, old_data, data_size);
 	}
+
 	void* enable()
 	{
 		enabled = true;
 		return ::vmemcpy(address, new_data, data_size);
 	}
+
 	void toggle()
 	{
 		if (enabled)
@@ -222,9 +216,17 @@ struct s_module_patch
 			enable();
 		}
 	}
+
+	bool enabled;
+
+	void* address;
+
+	void* old_data;
+	void* new_data;
+	unsigned long data_size;
 };
 
-s_module_patch* patch_memset(const wchar_t* module_name, unsigned long offset, long val, unsigned long size, bool enabled = true)
+s_module_patch* module_patch_create_memset(const wchar_t* module_name, unsigned long offset, long val, unsigned long size, bool enabled = true)
 {
 	s_module_patch* module_patch = nullptr;
 
@@ -251,7 +253,6 @@ s_module_patch* patch_memset(const wchar_t* module_name, unsigned long offset, l
 	return module_patch;
 }
 
-
 unsigned long call_to_function_offset(char* call_addr);
 unsigned long call_to_function_offset(unsigned long call_offset);
 
@@ -274,7 +275,7 @@ char* patch_call(const wchar_t* module_name, unsigned long offset, const void* s
 	return function_address;
 }
 
-s_module_patch* patch_memcpy(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size, bool enabled = true)
+s_module_patch* module_patch_create_memcpy(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size, bool enabled = true)
 {
 	s_module_patch* module_patch = nullptr;
 
@@ -303,7 +304,7 @@ s_module_patch* patch_memcpy(const wchar_t* module_name, unsigned long offset, c
 
 s_module_patch* patch_memaddr(const wchar_t* module_name, unsigned long offset, const void* src, unsigned long size)
 {
-	return patch_memcpy(module_name, offset, &src, size);
+	return module_patch_create_memcpy(module_name, offset, &src, size);
 }
 
 unsigned long module_address_to_offset(char* address)
