@@ -72,10 +72,11 @@ struct s_simple_patch_file_header
 	unsigned long footer_signature;
 };
 
-void simple_patch_setup(char* patch, unsigned long patch_size, short file_version, short file_type)
+template<unsigned long patch_length>
+void simple_patch_setup(char(&patch)[patch_length], short file_version, short file_type)
 {
 	assert(patch != nullptr);
-	assert(patch_size >= sizeof(s_simple_patch_file_header));
+	assert(patch_length >= sizeof(s_simple_patch_file_header));
 
 	s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
@@ -106,42 +107,45 @@ void simple_patch_set_description(char* patch, const char* description)
 	csstrnzcpy(header->description, description, sizeof(header->description));
 }
 
-void simple_patch_set_pattern(char* patch, unsigned long& file_size, const char* pattern, unsigned long pattern_size)
+template<unsigned long pattern_length>
+void simple_patch_set_pattern(char* patch, unsigned long& file_size, const char(&pattern)[pattern_length])
 {
 	assert(patch != nullptr);
 	assert(pattern != nullptr);
-	assert(pattern_size > 0);
+	assert(pattern_length > 0);
 
 	s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
 	header->pattern_offset = file_size;
-	file_size += ALIGN(pattern_size, simple_patch_file_alignment_bits);
+	file_size += ALIGN(pattern_length, simple_patch_file_alignment_bits);
 	csstrnzcpy(patch + header->pattern_offset, pattern, file_size - header->pattern_offset);
 }
 
-void simple_patch_set_mask(char* patch, unsigned long& file_size, const char* mask, unsigned long mask_size)
+template<unsigned long mask_length>
+void simple_patch_set_mask(char* patch, unsigned long& file_size, const char(&mask)[mask_length])
 {
 	assert(patch != nullptr);
 	assert(mask != nullptr);
-	assert(mask_size > 0);
+	assert(mask_length > 0);
 
 	s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
 	header->mask_offset = file_size;
-	file_size += ALIGN(mask_size, simple_patch_file_alignment_bits);
+	file_size += ALIGN(mask_length, simple_patch_file_alignment_bits);
 	csstrnzcpy(patch + header->mask_offset, mask, file_size - header->mask_offset);
 }
 
-void simple_patch_set_data(char* patch, unsigned long& file_size, unsigned char* data, unsigned long data_size)
+template<unsigned long data_length>
+void simple_patch_set_data(char* patch, unsigned long& file_size, unsigned char(&data)[data_length])
 {
 	assert(patch != nullptr);
 	assert(data != nullptr);
-	assert(data_size > 0);
+	assert(data_length > 0);
 
 	s_simple_patch_file_header* header = reinterpret_cast<decltype(header)>(patch);
 
 	header->data_offset = file_size;
-	header->data_size = data_size;
+	header->data_size = data_length;
 	file_size += ALIGN(header->data_size, simple_patch_file_alignment_bits);
 	memcpy(patch + header->data_offset, data, header->data_size);
 	header->file_size = file_size;

@@ -97,12 +97,6 @@ HANDLE create_thread(DWORD(WINAPI* thread_func)(LPVOID), LPDWORD thread_id, LPVO
 	return CreateThread(NULL, 0, thread_func, param, 0, thread_id);
 }
 
-template<unsigned long t_data_length, typename t_data_type>
-unsigned long t_data_size(t_data_type(&data)[t_data_length])
-{
-	return t_data_length - 1;
-}
-
 void on_dll_process_attach()
 {
 	{
@@ -112,12 +106,12 @@ void on_dll_process_attach()
 			unsigned long total_patch_size = sizeof(s_simple_patch_file_header);
 
 			unsigned char patch_data[] = "_";
-			simple_patch_setup(patch, sizeof(patch), 1, _simple_patch_file_type_memset);
+			simple_patch_setup(patch, 1, _simple_patch_file_type_memset);
 			simple_patch_set_name(patch, "bink format string");
 			simple_patch_set_description(patch, "skip the intro video files");
-			simple_patch_set_pattern(patch, total_patch_size, "bink\\%s.bik", t_data_size("bink\\%s.bik"));
-			simple_patch_set_mask(patch, total_patch_size, "xxxxxxxxxxx", t_data_size("xxxxxxxxxxx"));
-			simple_patch_set_data(patch, total_patch_size, patch_data, t_data_size(patch_data));
+			simple_patch_set_pattern(patch, total_patch_size, "bink\\%s.bik");
+			simple_patch_set_mask(patch, total_patch_size, "xxxxxxxxxxx");
+			simple_patch_set_data(patch, total_patch_size, patch_data);
 			simple_patch_write_file(patch, total_patch_size, "skip_intros.patch");
 		}
 
